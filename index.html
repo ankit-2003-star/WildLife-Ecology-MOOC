@@ -1,111 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101a2e">
-<title>Wildlife Ecology | Practice Lab</title>
-<style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#172238;--muted:#65738a;--line:#e2e8f0;--green:#16834a;--greenbg:#e5f8ec;--red:#c93636;--redbg:#fff0f0;--accent:#167d63;--accent2:#0c5b49;--navy:#101a2e}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
-.hero{background:radial-gradient(ellipse at 80% 10%,#245b50 0,transparent 36%),linear-gradient(125deg,#101a2e,#143c3a);color:#fff;padding:32px 20px 48px}
-.wrap{max-width:1040px;margin:auto}.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.2px}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#d9f99d;color:#18382e;font-size:23px}
-.hero h1{font-size:clamp(28px,5vw,43px);line-height:1.1;margin:28px 0 12px;letter-spacing:-1.3px}.hero p{color:#d0dfdf;max-width:650px;margin:0;font-size:16px}.pill{display:inline-flex;margin-top:20px;border:1px solid #5b7d74;border-radius:999px;padding:6px 12px;font-size:12px;color:#e3f8ed}
-main{max-width:1040px;margin:-24px auto 60px;padding:0 18px}.panel,.question-card,.score-card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 28px #182b4210}
-.panel{padding:24px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}.section-head h2{font-size:21px;margin:0}.sub{color:var(--muted);font-size:14px;margin:5px 0 0}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:700;font-size:14px;cursor:pointer;transition:.15s}.btn:focus-visible,.week:focus-within,.option:focus-visible{outline:3px solid #9ee8cd;outline-offset:2px}.primary{background:var(--accent);color:#fff}.primary:hover{background:var(--accent2)}.secondary{background:#edf2f7;color:#243247}.btn:disabled{opacity:.45;cursor:not-allowed}
-.week-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px}.week{border:1px solid var(--line);border-radius:14px;padding:13px;background:#fff;display:flex;gap:10px;align-items:center;cursor:pointer;min-width:0}.week:hover{border-color:#7ac8b0;background:#f8fffb}.week input{accent-color:var(--accent);width:17px;height:17px;flex-shrink:0}.week strong{display:block;font-size:14px}.week small{color:var(--muted);font-size:11px}
-.hint{font-size:13px;color:var(--muted);margin-top:14px}.hidden{display:none!important}
-.quiz-top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px 14px;margin:0 0 20px;position:sticky;top:10px;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);padding:14px 16px;border:1px solid #dce7e5;border-radius:18px;box-shadow:0 8px 24px #183b3212}.progress-label{font-size:13px;font-weight:800;color:#334155;letter-spacing:.1px}.progress{grid-column:1/-1;height:9px;background:#e9f0ee;border-radius:99px;overflow:hidden;min-width:0;box-shadow:inset 0 1px 2px #0f30200a}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#0d8066,#65c58a);border-radius:99px;transition:width .3s ease;box-shadow:0 0 10px #3aaf7a35}.counter{font-weight:800;font-size:12px;white-space:nowrap;background:#e8f7ef;color:#176348;border:1px solid #c8ead8;border-radius:999px;padding:6px 11px}@media(max-width:480px){.quiz-top{top:6px;padding:11px 12px;border-radius:15px;gap:9px 10px}.progress-label{font-size:12px}.counter{font-size:11px;padding:5px 9px}.progress{height:8px}}
-.question-card{padding:clamp(18px,4vw,30px);box-shadow:0 8px 28px #182b4208;margin-bottom:16px}.q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:15px}.tag{background:#e9f7f1;color:#176a51;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:750}.q-title{font-size:clamp(18px,2.8vw,23px);line-height:1.45;margin:0 0 22px;white-space:pre-wrap}.options{display:grid;gap:11px}.option{width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;border:1.5px solid var(--line);border-radius:14px;background:#fff;padding:14px 15px;color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s,background .15s}.option:hover:not(:disabled){border-color:#79b9a5;background:#f7fcf9}.letter{width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;border-radius:9px;background:#f0f4f7;font-size:12px;font-weight:800;color:#506076}.option-text{padding-top:2px}.option:disabled{cursor:default}.option.correct{border-color:#45b979;background:var(--greenbg);color:#145a35}.option.correct .letter{background:#bcebcf;color:#145a35}.option.wrong{border-color:#e56b6b;background:var(--redbg);color:#922b2b}.option.wrong .letter{background:#ffd6d6;color:#922b2b}.feedback{margin-top:16px;border-radius:12px;padding:12px 14px;font-weight:650;font-size:14px}.feedback.good{background:var(--greenbg);color:#17633b}.feedback.bad{background:var(--redbg);color:#a32b2b}.quiz-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}.keyboard-note{font-size:12px;color:var(--muted)}
-.score-card{padding:clamp(20px,5vw,38px);text-align:center}.score-icon{font-size:42px}.score-card h2{font-size:29px;margin:4px 0}.score-sub{color:var(--muted);margin:0}.score-number{font-size:clamp(42px,8vw,68px);font-weight:850;letter-spacing:-2px;color:var(--accent);line-height:1.2;margin:20px 0 6px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.stat{border:1px solid var(--line);border-radius:14px;padding:15px 8px}.stat strong{display:block;font-size:23px}.stat span{color:var(--muted);font-size:12px}.week-results{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0}.week-result{background:#f0f5f6;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700}.review{margin-top:24px;text-align:left;border-top:1px solid var(--line);padding-top:20px}.review h3{margin:0 0 12px}.review-item{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}.review-item h4{font-size:14px;margin:0 0 8px}.review-item p{font-size:13px;margin:5px 0;color:var(--muted)}.review-item .right{color:var(--green);font-weight:700}.review-item .miss{color:var(--red);font-weight:700}
-footer{text-align:center;padding:0 18px 30px;color:var(--muted);font-size:12px}
-@media(max-width:760px){.week-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:24px 18px 42px}.panel{padding:18px}.stats{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:20px}}
-@media(max-width:420px){.week-grid{grid-template-columns:1fr 1fr;gap:8px}.week{padding:10px 8px;gap:7px}.week strong{font-size:12px}.week small{font-size:10px}.option{padding:12px 10px;gap:9px}.letter{width:25px;height:25px}.quiz-footer .btn{flex:1}.quiz-footer{align-items:stretch}.keyboard-note{width:100%;text-align:center}}
-</style></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101a2e">
+    <title>Wildlife Ecology | Practice Lab</title>
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --card: #fff;
+            --ink: #172238;
+            --muted: #65738a;
+            --line: #e2e8f0;
+            --green: #16834a;
+            --greenbg: #e5f8ec;
+            --red: #c93636;
+            --redbg: #fff0f0;
+            --accent: #167d63;
+            --accent2: #0c5b49;
+            --navy: #101a2e
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+            line-height: 1.55
+        }
+
+        .hero {
+            background: radial-gradient(ellipse at 80% 10%, #245b50 0, transparent 36%), linear-gradient(125deg, #101a2e, #143c3a);
+            color: #fff;
+            padding: 32px 20px 48px
+        }
+
+        .wrap {
+            max-width: 1040px;
+            margin: auto
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 750;
+            letter-spacing: .2px
+        }
+
+        .logo {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: #d9f99d;
+            color: #18382e;
+            font-size: 23px
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 43px);
+            line-height: 1.1;
+            margin: 28px 0 12px;
+            letter-spacing: -1.3px
+        }
+
+        .hero p {
+            color: #d0dfdf;
+            max-width: 650px;
+            margin: 0;
+            font-size: 16px
+        }
+
+        .pill {
+            display: inline-flex;
+            margin-top: 20px;
+            border: 1px solid #5b7d74;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #e3f8ed
+        }
+
+        main {
+            max-width: 1040px;
+            margin: -24px auto 60px;
+            padding: 0 18px
+        }
+
+        .panel,
+        .question-card,
+        .score-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 8px 28px #182b4210
+        }
+
+        .panel {
+            padding: 24px
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .section-head h2 {
+            font-size: 21px;
+            margin: 0
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 5px 0 0
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 17px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .15s
+        }
+
+        .btn:focus-visible,
+        .week:focus-within,
+        .option:focus-visible {
+            outline: 3px solid #9ee8cd;
+            outline-offset: 2px
+        }
+
+        .primary {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .primary:hover {
+            background: var(--accent2)
+        }
+
+        .secondary {
+            background: #edf2f7;
+            color: #243247
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 22px
+        }
+
+        .week {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 13px;
+            background: #fff;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            cursor: pointer;
+            min-width: 0
+        }
+
+        .week:hover {
+            border-color: #7ac8b0;
+            background: #f8fffb
+        }
+
+        .week input {
+            accent-color: var(--accent);
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0
+        }
+
+        .week strong {
+            display: block;
+            font-size: 14px
+        }
+
+        .week small {
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 14px
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .quiz-top {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 10px 14px;
+            margin: 0 0 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 50;
+            background: rgba(255, 255, 255, .97);
+            backdrop-filter: blur(16px);
+            padding: 14px 16px;
+            border: 1px solid #dce7e5;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px #183b3212
+        }
+
+        .progress-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #334155;
+            letter-spacing: .1px
+        }
+
+        .progress {
+            grid-column: 1/-1;
+            height: 9px;
+            background: #e9f0ee;
+            border-radius: 99px;
+            overflow: hidden;
+            min-width: 0;
+            box-shadow: inset 0 1px 2px #0f30200a
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0d8066, #65c58a);
+            border-radius: 99px;
+            transition: width .3s ease;
+            box-shadow: 0 0 10px #3aaf7a35
+        }
+
+        .counter {
+            font-weight: 800;
+            font-size: 12px;
+            white-space: nowrap;
+            background: #e8f7ef;
+            color: #176348;
+            border: 1px solid #c8ead8;
+            border-radius: 999px;
+            padding: 6px 11px
+        }
+
+        @media(max-width:480px) {
+            .quiz-top {
+                top: 6px;
+                padding: 11px 12px;
+                border-radius: 15px;
+                gap: 9px 10px
+            }
+
+            .progress-label {
+                font-size: 12px
+            }
+
+            .counter {
+                font-size: 11px;
+                padding: 5px 9px
+            }
+
+            .progress {
+                height: 8px
+            }
+        }
+
+        .question-card {
+            padding: clamp(18px, 4vw, 30px);
+            box-shadow: 0 8px 28px #182b4208;
+            margin-bottom: 16px
+        }
+
+        .q-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px
+        }
+
+        .tag {
+            background: #e9f7f1;
+            color: #176a51;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 750
+        }
+
+        .q-title {
+            font-size: clamp(18px, 2.8vw, 23px);
+            line-height: 1.45;
+            margin: 0 0 22px;
+            white-space: pre-wrap
+        }
+
+        .options {
+            display: grid;
+            gap: 11px
+        }
+
+        .option {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            background: #fff;
+            padding: 14px 15px;
+            color: var(--ink);
+            font: inherit;
+            cursor: pointer;
+            transition: border-color .15s, background .15s
+        }
+
+        .option:hover:not(:disabled) {
+            border-color: #79b9a5;
+            background: #f7fcf9
+        }
+
+        .letter {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: #f0f4f7;
+            font-size: 12px;
+            font-weight: 800;
+            color: #506076
+        }
+
+        .option-text {
+            padding-top: 2px
+        }
+
+        .option:disabled {
+            cursor: default
+        }
+
+        .option.correct {
+            border-color: #45b979;
+            background: var(--greenbg);
+            color: #145a35
+        }
+
+        .option.correct .letter {
+            background: #bcebcf;
+            color: #145a35
+        }
+
+        .option.wrong {
+            border-color: #e56b6b;
+            background: var(--redbg);
+            color: #922b2b
+        }
+
+        .option.wrong .letter {
+            background: #ffd6d6;
+            color: #922b2b
+        }
+
+        .feedback {
+            margin-top: 16px;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-weight: 650;
+            font-size: 14px
+        }
+
+        .feedback.good {
+            background: var(--greenbg);
+            color: #17633b
+        }
+
+        .feedback.bad {
+            background: var(--redbg);
+            color: #a32b2b
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap
+        }
+
+        .keyboard-note {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .score-card {
+            padding: clamp(20px, 5vw, 38px);
+            text-align: center
+        }
+
+        .score-icon {
+            font-size: 42px
+        }
+
+        .score-card h2 {
+            font-size: 29px;
+            margin: 4px 0
+        }
+
+        .score-sub {
+            color: var(--muted);
+            margin: 0
+        }
+
+        .score-number {
+            font-size: clamp(42px, 8vw, 68px);
+            font-weight: 850;
+            letter-spacing: -2px;
+            color: var(--accent);
+            line-height: 1.2;
+            margin: 20px 0 6px
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 24px 0
+        }
+
+        .stat {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 15px 8px
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 23px
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .week-results {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 18px 0
+        }
+
+        .week-result {
+            background: #f0f5f6;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .review {
+            margin-top: 24px;
+            text-align: left;
+            border-top: 1px solid var(--line);
+            padding-top: 20px
+        }
+
+        .review h3 {
+            margin: 0 0 12px
+        }
+
+        .review-item {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px;
+            margin: 10px 0
+        }
+
+        .review-item h4 {
+            font-size: 14px;
+            margin: 0 0 8px
+        }
+
+        .review-item p {
+            font-size: 13px;
+            margin: 5px 0;
+            color: var(--muted)
+        }
+
+        .review-item .right {
+            color: var(--green);
+            font-weight: 700
+        }
+
+        .review-item .miss {
+            color: var(--red);
+            font-weight: 700
+        }
+
+        footer {
+            text-align: center;
+            padding: 0 18px 30px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        @media(max-width:760px) {
+            .week-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .hero {
+                padding: 24px 18px 42px
+            }
+
+            .panel {
+                padding: 18px
+            }
+
+            .stats {
+                gap: 7px
+            }
+
+            .stat {
+                padding: 12px 5px
+            }
+
+            .stat strong {
+                font-size: 20px
+            }
+        }
+
+        @media(max-width:420px) {
+            .week-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px
+            }
+
+            .week {
+                padding: 10px 8px;
+                gap: 7px
+            }
+
+            .week strong {
+                font-size: 12px
+            }
+
+            .week small {
+                font-size: 10px
+            }
+
+            .option {
+                padding: 12px 10px;
+                gap: 9px
+            }
+
+            .letter {
+                width: 25px;
+                height: 25px
+            }
+
+            .quiz-footer .btn {
+                flex: 1
+            }
+
+            .quiz-footer {
+                align-items: stretch
+            }
+
+            .keyboard-note {
+                width: 100%;
+                text-align: center
+            }
+        }
+    </style>
+</head>
+
 <body>
-<header class="hero"><div class="wrap">
-<div class="brand"><div class="logo">🌿</div><span>WILDLIFE ECOLOGY <span style="font-weight:400;color:#b8d3c8">/ PRACTICE LAB</span></span></div>
-<h1>Practice. Learn.<br>Protect biodiversity.</h1>
-<p>A focused practice space for your NPTEL Wildlife Ecology assignments. Choose your weeks, test yourself with shuffled questions, and see your score when you finish.</p>
-<div class="pill">13 WEEKS · 130 QUESTIONS · INSTANT FEEDBACK</div>
-</div></header>
-<main>
-<section class="panel" id="setup">
-<div class="section-head"><div><h2>Build your practice session</h2><p class="sub">Choose one week or combine as many weeks as you like.</p></div><div class="sub" id="selectedCount">0 weeks selected</div></div>
-<div class="actions" style="margin-top:15px"><button class="btn secondary" id="selectAll">Select all weeks</button><button class="btn secondary" id="clearAll">Clear selection</button></div>
-<div class="week-grid" id="weekGrid"></div>
-<div class="actions"><button class="btn primary" id="startBtn" disabled>Start practice →</button></div>
-<div class="hint">Questions and answer choices are shuffled every time you start. Once you choose an answer, that question is locked; the selected answer is marked red or the correct answer green.</div>
-</section>
-<section id="quiz" class="hidden">
-<div class="quiz-top"><span class="progress-label" id="progressLabel">0 of 0 answered</span><div class="progress"><span id="progressBar"></span></div></div>
-<div id="questionList"></div>
-<div class="quiz-footer" style="background:var(--bg);padding:14px 0"><span class="keyboard-note" id="completionNote">Answer every question to view your scoreboard.</span><button class="btn primary" id="finishBtn" disabled>View scoreboard →</button></div>
-</section>
-<section id="results" class="hidden"></section>
-</main>
-<footer>Wildlife Ecology Practice Lab · Questions based on the uploaded Week 0–12 assignment PDFs.<br><span style="display:inline-block;margin-top:8px;font-weight:750;color:var(--green)">Designed and Developed by Ankit</span></footer>
-<script>
-const BANK = {"7": [{"n": 1, "question": "In an estuary, species may use areas of", "options": [{"label": "a", "text": "high, intermediate, and low salinity"}, {"label": "b", "text": "only high temperature and high fertility"}, {"label": "c", "text": "only alpine wind and poor soil"}, {"label": "d", "text": "only forest canopy and grassland patches 2"}], "week": 7, "answer": "a"}, {"n": 2, "question": "The movement of individuals away from their place of birth or hatching or seed production into a new habitat or area to survive and reproduce is called", "options": [{"label": "a", "text": "translocation"}, {"label": "b", "text": "migration"}, {"label": "c", "text": "dispersal"}, {"label": "d", "text": "drifting 3"}], "week": 7, "answer": "c"}, {"n": 3, "question": "Transplantation experiments are used to find", "options": [{"label": "a", "text": "potential range"}, {"label": "b", "text": "effective range"}, {"label": "c", "text": "actual range"}, {"label": "d", "text": "economic range 4"}], "week": 7, "answer": "a"}, {"n": 4, "question": "Pneumatophores are roots that", "options": [{"label": "a", "text": "move downward to store excess salts"}, {"label": "b", "text": "spread into sand dunes to stop wind erosion"}, {"label": "c", "text": "grow upward from the ground to obtain air"}, {"label": "d", "text": "become thorns to reduce transpiration 5"}], "week": 7, "answer": "c"}, {"n": 5, "question": "At night, cooler and denser air from upper hill areas flows down towards the valley. This wind pattern is called", "options": [{"label": "a", "text": "valley breeze"}, {"label": "b", "text": "hill wind"}, {"label": "c", "text": "ocean breeze"}, {"label": "d", "text": "estuary current 6"}], "week": 7, "answer": "b"}, {"n": 6, "question": "Flamingos in the Rann of Kutch are associated with water bodies because they need", "options": [{"label": "a", "text": "high wind speeds and snow-covered slopes"}, {"label": "b", "text": "food organisms in water and safe breeding conditions"}, {"label": "c", "text": "dry deciduous leaves for summer feeding"}, {"label": "d", "text": "tall coniferous trees for nesting 7"}], "week": 7, "answer": "b"}, {"n": 7, "question": "Estuaries are specialized habitats because they contain", "options": [{"label": "a", "text": "only freshwater throughout the year"}, {"label": "b", "text": "only saline water throughout the year"}, {"label": "c", "text": "only dry land and thorny shrubs"}, {"label": "d", "text": "a meeting zone of freshwater and saline water 8"}], "week": 7, "answer": "d"}, {"n": 8, "question": "The movement of lions across the Gir landscape is an example of", "options": [{"label": "a", "text": "diffusion"}, {"label": "b", "text": "secular dispersal"}, {"label": "c", "text": "jump dispersal"}, {"label": "d", "text": "drifting 9"}], "week": 7, "answer": "c"}, {"n": 9, "question": "Mangroves are adapted to areas that experience", "options": [{"label": "a", "text": "low salinity and permanent dryness"}, {"label": "b", "text": "snow accumulation and alpine winds"}, {"label": "c", "text": "deep desert sand with no water movement"}, {"label": "d", "text": "high salinity and partial or complete inundation 10"}], "week": 7, "answer": "d"}, {"n": 10, "question": "Scarcity of food is a", "options": [{"label": "a", "text": "chemical factor"}, {"label": "b", "text": "demographic factor"}, {"label": "c", "text": "push factor"}, {"label": "d", "text": "pull factor"}], "week": 7, "answer": "c"}], "12": [{"n": 1, "question": "In cave formations, the deposits growing downward from the roof are called?", "options": [{"label": "a", "text": "Stalagmites"}, {"label": "b", "text": "Columns"}, {"label": "c", "text": "Stalactites"}, {"label": "d", "text": "Sediment bars 2"}], "week": 12, "answer": "c"}, {"n": 2, "question": "Which of these is a deterministic factor?", "options": [{"label": "a", "text": "environmental variation"}, {"label": "b", "text": "forest fire"}, {"label": "c", "text": "death rate"}, {"label": "d", "text": "diseases 3"}], "week": 12, "answer": "c"}, {"n": 3, "question": "An ecological interaction in which both participating organisms are harmed is called", "options": [{"label": "a", "text": "mutualism"}, {"label": "b", "text": "commensalism"}, {"label": "c", "text": "competition"}, {"label": "d", "text": "neutralism 4"}], "week": 12, "answer": "c"}, {"n": 4, "question": "Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)", "options": [{"label": "a", "text": "statics"}, {"label": "b", "text": "interactions"}, {"label": "c", "text": "dynamics"}, {"label": "d", "text": "habitat 5"}], "week": 12, "answer": "b"}, {"n": 5, "question": "Mesodebris in the context of plastic debris has fragments of size", "options": [{"label": "a", "text": "> 20 mm"}, {"label": "b", "text": "5 - 20 mm"}, {"label": "c", "text": "< 5 mm"}, {"label": "d", "text": "< 1 mm 6"}], "week": 12, "answer": "b"}, {"n": 6, "question": "Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?", "options": [{"label": "a", "text": "Organ"}, {"label": "b", "text": "Tissue"}, {"label": "c", "text": "Organ system"}, {"label": "d", "text": "Population 7"}], "week": 12, "answer": "b"}, {"n": 7, "question": "Secondary succession refers to succession that occurs", "options": [{"label": "a", "text": "On newly exposed rock or sand surfaces"}, {"label": "b", "text": "In a saline body such as a marsh"}, {"label": "c", "text": "After severe disturbance or removal of a pre-existing community"}, {"label": "d", "text": "Only when climate controls the final community 8"}], "week": 12, "answer": "c"}, {"n": 8, "question": "A group of organs working together to perform one or more functions is called?", "options": [{"label": "a", "text": "Tissue"}, {"label": "b", "text": "Organ"}, {"label": "c", "text": "Organism"}, {"label": "d", "text": "Organ system 9"}], "week": 12, "answer": "d"}, {"n": 9, "question": "After a forest fire, an incompletely destroyed forest develops through herbaceous, shrub and woodland stages toward a stable stage. This is best described as?", "options": [{"label": "a", "text": "Secondary succession"}, {"label": "b", "text": "Climatic climax"}, {"label": "c", "text": "Bioaccumulation"}, {"label": "d", "text": "Species-area effect 10"}], "week": 12, "answer": "c"}, {"n": 10, "question": "If organisms already present in an area change the soil conditions and thereby drive further community change, the succession is?", "options": [{"label": "a", "text": "Allogenic succession"}, {"label": "b", "text": "Autogenic succession"}, {"label": "c", "text": "Catastrophic succession"}, {"label": "d", "text": "Seasonal succession"}], "week": 12, "answer": "b"}], "4": [{"n": 1, "question": "Consider the food chain: Grass → Grasshopper → Frog → Snake → Hawk. In this food chain,", "options": [{"label": "a", "text": "hawk is producer"}, {"label": "b", "text": "hawk is consumer and carnivore"}, {"label": "c", "text": "hawk is consumer and herbivore"}, {"label": "d", "text": "hawk is decomposer 2"}], "week": 4, "answer": "b"}, {"n": 2, "question": "Trees → Birds → Parasites → Hyperparasites represents", "options": [{"label": "a", "text": "upright pyramid of numbers"}, {"label": "b", "text": "inverted pyramid of numbers"}, {"label": "c", "text": "spindle pyramid of numbers"}, {"label": "d", "text": "dumb-bell pyramid of numbers 3"}], "week": 4, "answer": "b"}, {"n": 3, "question": "Glacial lakes are typical examples of", "options": [{"label": "a", "text": "eutrophic lakes"}, {"label": "b", "text": "hypereutrophic lakes"}, {"label": "c", "text": "oligotrophic lakes"}, {"label": "d", "text": "mesotrophic lakes 4"}], "week": 4, "answer": "c"}, {"n": 4, "question": "In a grazing food chain, the first trophic level after producers is generally occupied by:", "options": [{"label": "a", "text": "Carnivores"}, {"label": "b", "text": "Decomposers"}, {"label": "c", "text": "Detritivores"}, {"label": "d", "text": "Herbivores 5"}], "week": 4, "answer": "d"}, {"n": 5, "question": "Which statement correctly defines net primary production?", "options": [{"label": "a", "text": "Energy intercepted by producers from the Sun"}, {"label": "b", "text": "Total energy lost during transfer between trophic levels"}, {"label": "c", "text": "Gross primary production minus energy lost through respiration per unit time"}, {"label": "d", "text": "Energy stored only in herbivore biomass 6"}], "week": 4, "answer": "c"}, {"n": 6, "question": "Which statement correctly defines gross primary production?", "options": [{"label": "a", "text": "Energy fixed through photosynthesis per unit time"}, {"label": "b", "text": "Energy lost by organisms through respiration per unit time"}, {"label": "c", "text": "Total number of producers in an ecosystem"}, {"label": "d", "text": "Organic matter consumed by herbivores per unit time 7"}], "week": 4, "answer": "a"}, {"n": 7, "question": "Which chain best represents a detritus food chain?", "options": [{"label": "a", "text": "Fallen leaves → detritivores → small fish → large fish"}, {"label": "b", "text": "Grass → chital → tiger"}, {"label": "c", "text": "Rat → flea → parasitic protozoa"}, {"label": "d", "text": "Phytoplankton → zooplankton → fish → sea lion 8"}], "week": 4, "answer": "a"}, {"n": 8, "question": "Consider the food chain: Grass → Grasshopper → Frog → Snake → Hawk. As we move up the food chain,", "options": [{"label": "a", "text": "available energy decreases"}, {"label": "b", "text": "available energy increases"}, {"label": "c", "text": "available energy remains same"}, {"label": "d", "text": "available energy is zero everywhere 9"}], "week": 4, "answer": "a"}, {"n": 9, "question": "Which statement correctly describes a decomposer?", "options": [{"label": "a", "text": "It only feeds on living plants"}, {"label": "b", "text": "It consumes only primary consumers"}, {"label": "c", "text": "It converts dead material into soil and recycles nutrients"}, {"label": "d", "text": "It always occupies the quaternary trophic level 10"}], "week": 4, "answer": "c"}, {"n": 10, "question": "Which description best defines a heterotroph?", "options": [{"label": "a", "text": "An organism that converts sunlight directly into inorganic nutrients"}, {"label": "b", "text": "An organism that cannot produce its own food and depends on organic carbon from other sources"}, {"label": "c", "text": "An organism that uses chemical reactions to manufacture minerals"}, {"label": "d", "text": "An organism that occupies only the first trophic level"}], "week": 4, "answer": "b"}], "2": [{"n": 1, "question": "Hierarchy emerges almost inevitably through a wide variety of evolutionary processes, for the simple reason that hierarchical structures are ____________ (Fill in the blank)", "options": [{"label": "a", "text": "perfect"}, {"label": "b", "text": "imperfect"}, {"label": "c", "text": "stable"}, {"label": "d", "text": "unstable"}], "week": 2, "answer": "c"}, {"n": 2, "question": "Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?", "options": [{"label": "a", "text": "Organ"}, {"label": "b", "text": "Tissue"}, {"label": "c", "text": "Organ system"}, {"label": "d", "text": "Population"}], "week": 2, "answer": "b"}, {"n": 3, "question": "\"the diversity that exists within an ecosystem\" is", "options": [{"label": "a", "text": "alpha (α) biodiversity"}, {"label": "b", "text": "beta (β) biodiversity"}, {"label": "c", "text": "gamma (γ) biodiversity"}, {"label": "d", "text": "delta (δ) biodiversity"}], "week": 2, "answer": "a"}, {"n": 4, "question": "\"groups of actually or potentially interbreeding natural populations, which are reproductively isolated from other such groups\" is a definition of", "options": [{"label": "a", "text": "cells"}, {"label": "b", "text": "species"}, {"label": "c", "text": "ecosystems"}, {"label": "d", "text": "biomes"}], "week": 2, "answer": "b"}, {"n": 5, "question": "The emergent principle can be stated as", "options": [{"label": "a", "text": "Whole = sum of parts"}, {"label": "b", "text": "Whole < sum of parts"}, {"label": "c", "text": "Whole > sum of parts"}, {"label": "d", "text": "None of these"}], "week": 2, "answer": "c"}, {"n": 6, "question": "The smallest unit of life is the:", "options": [{"label": "a", "text": "Cell"}, {"label": "b", "text": "Tissue"}, {"label": "c", "text": "Organ"}, {"label": "d", "text": "Organism"}], "week": 2, "answer": "a"}, {"n": 7, "question": "The diversity of genetic information present at the levels of phyla, families, species, populations and individuals is called:", "options": [{"label": "a", "text": "Ecosystem biodiversity"}, {"label": "b", "text": "Species evenness"}, {"label": "c", "text": "Genetic biodiversity"}, {"label": "d", "text": "Species richness"}], "week": 2, "answer": "c"}, {"n": 8, "question": "The value of leaving use and non-use values for future generations is called:", "options": [{"label": "a", "text": "Altruistic value"}, {"label": "b", "text": "Option value"}, {"label": "c", "text": "Existence value"}, {"label": "d", "text": "Bequest value"}], "week": 2, "answer": "d"}, {"n": 9, "question": "Value arising even though a resource is not being used is called:", "options": [{"label": "a", "text": "Direct value"}, {"label": "b", "text": "Indirect value"}, {"label": "c", "text": "Non-use value"}, {"label": "d", "text": "Productive value"}], "week": 2, "answer": "c"}, {"n": 10, "question": "Species richness refers to:", "options": [{"label": "a", "text": "The distribution of individuals among different species"}, {"label": "b", "text": "The genetic variation within one population"}, {"label": "c", "text": "The number of ecosystems in a biome"}, {"label": "d", "text": "The number of species present"}], "week": 2, "answer": "d"}], "6": [{"n": 1, "question": "A guild is a group of species that", "options": [{"label": "a", "text": "Occupy only one climax community"}, {"label": "b", "text": "Have identical population size"}, {"label": "c", "text": "Utilise resources in a similar way"}, {"label": "d", "text": "Are confined to saline habitats 2"}], "week": 6, "answer": "c"}, {"n": 2, "question": "The climax near Tindni village is being controlled by disturbance by cattle. This is an example of", "options": [{"label": "a", "text": "climatic climax"}, {"label": "b", "text": "edaphic climax"}, {"label": "c", "text": "disclimax"}, {"label": "d", "text": "catastrophic climax 3"}], "week": 6, "answer": "c"}, {"n": 3, "question": "Species abundance may be expressed in terms of", "options": [{"label": "a", "text": "Climate, soil and slope"}, {"label": "b", "text": "Number of individuals, biomass or cover"}, {"label": "c", "text": "Hydrosere, xerosere and halosere"}, {"label": "d", "text": "Resistance, resilience and stability 4"}], "week": 6, "answer": "b"}, {"n": 4, "question": "Resistance refers to the ability of a community to", "options": [{"label": "a", "text": "Recover quickly after disturbance"}, {"label": "b", "text": "Persist without change in the face of disturbance"}, {"label": "c", "text": "Increase the number of pioneer species"}, {"label": "d", "text": "Replace one seral stage with another 5"}], "week": 6, "answer": "b"}, {"n": 5, "question": "Importance value can be written as", "options": [{"label": "a", "text": "Relative density + Relative frequency X Relative dominance"}, {"label": "b", "text": "Relative density X Relative frequency + Relative dominance"}, {"label": "c", "text": "Relative density + Relative frequency + Relative dominance"}, {"label": "d", "text": "Relative density X Relative frequency X Relative dominance 6"}], "week": 6, "answer": "c"}, {"n": 6, "question": "Secondary succession refers to succession that occurs", "options": [{"label": "a", "text": "On newly exposed rock or sand surfaces"}, {"label": "b", "text": "In a saline body such as a marsh"}, {"label": "c", "text": "After severe disturbance or removal of a pre-existing community"}, {"label": "d", "text": "Only when climate controls the final community 7"}], "week": 6, "answer": "c"}, {"n": 7, "question": "Lithosere is an example of", "options": [{"label": "a", "text": "hydrosere"}, {"label": "b", "text": "xerosere"}, {"label": "c", "text": "psammosere"}, {"label": "d", "text": "halosere 8"}], "week": 6, "answer": "b"}, {"n": 8, "question": "A transition area where two communities meet and integrate is called", "options": [{"label": "a", "text": "Habitat"}, {"label": "b", "text": "Niche"}, {"label": "c", "text": "Ecotone"}, {"label": "d", "text": "Sere 9"}], "week": 6, "answer": "c"}, {"n": 9, "question": "Which of these is correct?", "options": [{"label": "a", "text": "Fundamental niche > Realised niche"}, {"label": "b", "text": "Fundamental niche = Realised niche"}, {"label": "c", "text": "Fundamental niche < Realised niche"}, {"label": "d", "text": "a or b 10"}], "week": 6, "answer": "a"}, {"n": 10, "question": "Species richness refers to", "options": [{"label": "a", "text": "Number of species"}, {"label": "b", "text": "Number of individuals of one species"}, {"label": "c", "text": "Biomass of the dominant species"}, {"label": "d", "text": "Basal area of all trees"}], "week": 6, "answer": "a"}], "5": [{"n": 1, "question": "In population dynamics, which pair represents additions to an existing population?", "options": [{"label": "a", "text": "Mortality and emigration"}, {"label": "b", "text": "Natality and immigration"}, {"label": "c", "text": "Mortality and natality"}, {"label": "d", "text": "Immigration and emigration 2"}], "week": 5, "answer": "b"}, {"n": 2, "question": "Cover board surveys are typically used for sampling", "options": [{"label": "a", "text": "herpetofauna"}, {"label": "b", "text": "fishes"}, {"label": "c", "text": "large mammals"}, {"label": "d", "text": "carnivores 3"}], "week": 5, "answer": "a"}, {"n": 3, "question": "Pan traps are used for sampling", "options": [{"label": "a", "text": "bees"}, {"label": "b", "text": "butterflies"}, {"label": "c", "text": "non-pollinator insects"}, {"label": "d", "text": "pollinator insects 4"}], "week": 5, "answer": "d"}, {"n": 4, "question": "A sampling procedure such that each possible combination of sampling units out of the population has the same chance of being selected is referred to as", "options": [{"label": "a", "text": "Simple random sampling"}, {"label": "b", "text": "Systematic sampling"}, {"label": "c", "text": "Stratified sampling"}, {"label": "d", "text": "Multistage sampling 5"}], "week": 5, "answer": "a"}, {"n": 5, "question": "The minimum replacement level fertility for a population to grow should be greater than", "options": [{"label": "a", "text": "1"}, {"label": "b", "text": "2"}, {"label": "c", "text": "3"}, {"label": "d", "text": "4 6"}], "week": 5, "answer": "b"}, {"n": 6, "question": "A list of sampling units is called a:", "options": [{"label": "a", "text": "Sample"}, {"label": "b", "text": "Sampling intensity"}, {"label": "c", "text": "Sampling frame"}, {"label": "d", "text": "Stratum 7"}], "week": 5, "answer": "c"}, {"n": 7, "question": "In capture-recapture method, the first stage involves:", "options": [{"label": "a", "text": "Counting faecal pellets"}, {"label": "b", "text": "Removing trapped animals permanently"}, {"label": "c", "text": "Estimating bait consumption"}, {"label": "d", "text": "Capturing, marking and releasing animals 8"}], "week": 5, "answer": "d"}, {"n": 8, "question": "The logistic growth equation, when plotted, appears", "options": [{"label": "a", "text": "I shaped"}, {"label": "b", "text": "J shaped"}, {"label": "c", "text": "S shaped"}, {"label": "d", "text": "O shaped 9"}], "week": 5, "answer": "c"}, {"n": 9, "question": "employs a simple rule of selecting every kth unit starting with a number chosen at random from 1 to k as the random start.", "options": [{"label": "a", "text": "Simple random sampling"}, {"label": "b", "text": "Systematic sampling"}, {"label": "c", "text": "Stratified sampling"}, {"label": "d", "text": "Multistage sampling 10"}], "week": 5, "answer": "b"}, {"n": 10, "question": "Which of these is not a measure of absolute population density?", "options": [{"label": "a", "text": "total count"}, {"label": "b", "text": "pelt count"}, {"label": "c", "text": "capture-recapture method"}, {"label": "d", "text": "removal method"}], "week": 5, "answer": "b"}], "9": [{"n": 1, "question": "A proposed epoch marked by significant human impact on Earth’s geology and ecosystems is called?", "options": [{"label": "a", "text": "Holocene"}, {"label": "b", "text": "Anthropocene"}, {"label": "c", "text": "Pleistocene"}, {"label": "d", "text": "Carboniferous 2"}], "week": 9, "answer": "b"}, {"n": 2, "question": "According to Malthusian model,", "options": [{"label": "a", "text": "Population grows in geometric progression, food supply increases in arithmetic progression"}, {"label": "b", "text": "Population grows in geometric progression, food supply increases in geometric progression"}, {"label": "c", "text": "Population grows in arithmetic progression, food supply increases in arithmetic progression"}, {"label": "d", "text": "Population grows in arithmetic progression, food supply increases in geometric progression 3"}], "week": 9, "answer": "a"}, {"n": 3, "question": "Which of these is not a pillar of sustainability?", "options": [{"label": "a", "text": "environmental sustainability"}, {"label": "b", "text": "economic sustainability"}, {"label": "c", "text": "trans-boundary sustainability"}, {"label": "d", "text": "social sustainability 4"}], "week": 9, "answer": "c"}, {"n": 4, "question": "The demographic transition sees a society move from", "options": [{"label": "a", "text": "high birth rate, low death rate to low birth rate, low death rate"}, {"label": "b", "text": "low birth rate, high death rate to low birth rate, low death rate"}, {"label": "c", "text": "high birth rate, high death rate to low birth rate, low death rate"}, {"label": "d", "text": "high birth rate, high death rate to low birth rate, high death rate 5"}], "week": 9, "answer": "c"}, {"n": 5, "question": "Which of the following is listed as a theme of clean technology?", "options": [{"label": "a", "text": "Water purification"}, {"label": "b", "text": "Predator-prey control"}, {"label": "c", "text": "Migration of birds"}, {"label": "d", "text": "Food chain length 6"}], "week": 9, "answer": "a"}, {"n": 6, "question": "When stalactites and stalagmites join together, they form a?", "options": [{"label": "a", "text": "Lagoon"}, {"label": "b", "text": "Crevice"}, {"label": "c", "text": "Terrace"}, {"label": "d", "text": "Column 7"}], "week": 9, "answer": "d"}, {"n": 7, "question": "Which of these is a preventive check according to Malthus?", "options": [{"label": "a", "text": "foresight"}, {"label": "b", "text": "vice"}, {"label": "c", "text": "misery"}, {"label": "d", "text": "flood 8"}], "week": 9, "answer": "a"}, {"n": 8, "question": "Which of these is a pillar of sustainability", "options": [{"label": "a", "text": "social sustainability"}, {"label": "b", "text": "industrial sustainability"}, {"label": "c", "text": "agricultural sustainability"}, {"label": "d", "text": "trans-boundary sustainability 9"}], "week": 9, "answer": "a"}, {"n": 9, "question": "In cave formations, the deposits growing downward from the roof are called?", "options": [{"label": "a", "text": "Stalagmites"}, {"label": "b", "text": "Columns"}, {"label": "c", "text": "Stalactites"}, {"label": "d", "text": "Sediment bars 10"}], "week": 9, "answer": "c"}, {"n": 10, "question": "Industrial processes such as the Haber process affect which biogeochemical cycle?", "options": [{"label": "a", "text": "Carbon cycle only"}, {"label": "b", "text": "Water cycle only"}, {"label": "c", "text": "Nitrogen cycle"}, {"label": "d", "text": "Phosphorus cycle only"}], "week": 9, "answer": "c"}], "11": [{"n": 1, "question": "Which term refers to the total weight of organisms removed by fishing?", "options": [{"label": "a", "text": "Natural mortality"}, {"label": "b", "text": "Recruitment"}, {"label": "c", "text": "Growth"}, {"label": "d", "text": "Yield to fishery 2"}], "week": 11, "answer": "d"}, {"n": 2, "question": "Ludwig's ratchet predicts", "options": [{"label": "a", "text": "decreasing harvesting rate"}, {"label": "b", "text": "constant harvesting rate"}, {"label": "c", "text": "increasing harvesting rate"}, {"label": "d", "text": "fluctuating harvesting rate 3"}], "week": 11, "answer": "c"}, {"n": 3, "question": "A deciduous forest in Madhya Pradesh was converted to a mine. After the mining operations were over, the pits were filled up with water and a lake was created. It is now visited by several migratory birds. This is an example of", "options": [{"label": "a", "text": "recovery"}, {"label": "b", "text": "restoration"}, {"label": "c", "text": "enhancement"}, {"label": "d", "text": "replacement 4"}], "week": 11, "answer": "d"}, {"n": 4, "question": "Which of these is correct?", "options": [{"label": "a", "text": "The maximum sustainable yield is near the beginning of the sigmoidal curve."}, {"label": "b", "text": "The maximum sustainable yield is near the mid-point of the sigmoidal curve."}, {"label": "c", "text": "The maximum sustainable yield is near the end of the sigmoidal curve."}, {"label": "d", "text": "None of these. 5"}], "week": 11, "answer": "b"}, {"n": 5, "question": "Which of these is correct?", "options": [{"label": "a", "text": "R + G = M + F"}, {"label": "b", "text": "R + M = G + F"}, {"label": "c", "text": "R + F = M + G"}, {"label": "d", "text": "R + G + M + F = 0 6"}], "week": 11, "answer": "a"}, {"n": 6, "question": "In a logistic growth curve, growth is slow near carrying capacity mainly because the population is:", "options": [{"label": "a", "text": "very small"}, {"label": "b", "text": "newly introduced"}, {"label": "c", "text": "close to the environmental limit"}, {"label": "d", "text": "free from competition 7"}], "week": 11, "answer": "c"}, {"n": 7, "question": "What does absolute abundance measure?", "options": [{"label": "a", "text": "Relative catch per unit effort"}, {"label": "b", "text": "Actual number of individuals present"}, {"label": "c", "text": "Percentage change in population"}, {"label": "d", "text": "Estimated trend in sightings 8"}], "week": 11, "answer": "b"}, {"n": 8, "question": "A root zone treatment plant is an example of", "options": [{"label": "a", "text": "phytoremediation"}, {"label": "b", "text": "biological control"}, {"label": "c", "text": "biomagnification"}, {"label": "d", "text": "bioaccumulation 9"}], "week": 11, "answer": "a"}, {"n": 9, "question": "What is a major risk of introducing predators for pest control?", "options": [{"label": "a", "text": "The pest always becomes extinct immediately"}, {"label": "b", "text": "The predator cannot reproduce under any condition"}, {"label": "c", "text": "The predator reduces rainfall"}, {"label": "d", "text": "The introduced predator may itself become a pest 10"}], "week": 11, "answer": "d"}, {"n": 10, "question": "Ecotoxicology studies toxic chemicals mainly at which broader levels?", "options": [{"label": "a", "text": "Individual atoms and molecules only"}, {"label": "b", "text": "Population, community, ecosystem, and biosphere levels"}, {"label": "c", "text": "Market demand and harvesting cost only"}, {"label": "d", "text": "Crop yield and storage levels only"}], "week": 11, "answer": "b"}], "8": [{"n": 1, "question": "Which of these correctly represents the process of habitat fragmentation and loss?", "options": [{"label": "a", "text": "Original forest → Dissection → Perforation → Fragmentation → Attrition"}, {"label": "b", "text": "Original forest → Dissection → Attrition → Fragmentation → Perforation"}, {"label": "c", "text": "Original forest → Dissection → Perforation → Attrition → Fragmentation"}, {"label": "d", "text": "Original forest → Dissection → Fragmentation → Perforation → Attrition 2"}], "week": 8, "answer": "a"}, {"n": 2, "question": "Habitat degradation means", "options": [{"label": "a", "text": "complete removal of all organisms from an area"}, {"label": "b", "text": "legal declaration of a protected area"}, {"label": "c", "text": "breaking a forest into administrative zones"}, {"label": "d", "text": "reduction in habitat quality for a given species 3"}], "week": 8, "answer": "d"}, {"n": 3, "question": "When area is reduced by 90% and z is taken as 0.30, species richness approximately becomes", "options": [{"label": "a", "text": "one-tenth of the original"}, {"label": "b", "text": "half of the original"}, {"label": "c", "text": "double the original"}, {"label": "d", "text": "unchanged 4"}], "week": 8, "answer": "b"}, {"n": 4, "question": "Breaking a natural landscape into small isolated parcels within human-dominated land is called", "options": [{"label": "a", "text": "habitat restoration"}, {"label": "b", "text": "habitat fragmentation"}, {"label": "c", "text": "ex-situ preservation"}, {"label": "d", "text": "seed dormancy 5"}], "week": 8, "answer": "b"}, {"n": 5, "question": "We prefer those areas for the creation of a conservation reserve where the level of threat is", "options": [{"label": "a", "text": "very high"}, {"label": "b", "text": "medium"}, {"label": "c", "text": "very low"}, {"label": "d", "text": "non-existent 6"}], "week": 8, "answer": "a"}, {"n": 6, "question": "A very small population moves towards extinction mainly because of Allee effect, chance deaths, and related small-population problems. This is best described as", "options": [{"label": "a", "text": "habitat displacement"}, {"label": "b", "text": "small population paradigm"}, {"label": "c", "text": "reserve design"}, {"label": "d", "text": "biodiversity repository 7"}], "week": 8, "answer": "b"}, {"n": 7, "question": "A population becomes smaller because its habitat is shrinking, competitors are increasing, and poaching is removing individuals. This situation is best studied under", "options": [{"label": "a", "text": "declining population paradigm"}, {"label": "b", "text": "small population paradigm"}, {"label": "c", "text": "island biogeography model"}, {"label": "d", "text": "cryopreservation strategy 8"}], "week": 8, "answer": "a"}, {"n": 8, "question": "Which of these is a deterministic factor?", "options": [{"label": "a", "text": "environmental variation"}, {"label": "b", "text": "forest fire"}, {"label": "c", "text": "death rate"}, {"label": "d", "text": "diseases 9"}], "week": 8, "answer": "c"}, {"n": 9, "question": "Roads, railways, dams, and similar structures contribute to fragmentation because they may act as", "options": [{"label": "a", "text": "mortality sources and physical barriers"}, {"label": "b", "text": "seed collection centres"}, {"label": "c", "text": "botanical repositories"}, {"label": "d", "text": "cryopreservation facilities 10"}], "week": 8, "answer": "a"}, {"n": 10, "question": "The acronym HIPPO does not include", "options": [{"label": "a", "text": "habitat loss"}, {"label": "b", "text": "invasive species"}, {"label": "c", "text": "pollination"}, {"label": "d", "text": "pollution"}], "week": 8, "answer": "c"}], "3": [{"n": 1, "question": "I observe a bird take a tick out of another bird's head and eat it. In the social context, this behaviour would be called", "options": [{"label": "a", "text": "tick hunting"}, {"label": "b", "text": "auto grooming"}, {"label": "c", "text": "allo grooming"}, {"label": "d", "text": "foraging 2"}], "week": 3, "answer": "c"}, {"n": 2, "question": "Leech is an example of", "options": [{"label": "a", "text": "endoparasite"}, {"label": "b", "text": "herbivore predator"}, {"label": "c", "text": "parasitoid"}, {"label": "d", "text": "ectoparasite 3"}], "week": 3, "answer": "d"}, {"n": 3, "question": "An ecological interaction in which both participating organisms are harmed is called", "options": [{"label": "a", "text": "mutualism"}, {"label": "b", "text": "commensalism"}, {"label": "c", "text": "competition"}, {"label": "d", "text": "neutralism 4"}], "week": 3, "answer": "c"}, {"n": 4, "question": "Interspecific interaction occurs between", "options": [{"label": "a", "text": "members of different species"}, {"label": "b", "text": "members of the same species"}, {"label": "c", "text": "two organisms that are both benefited"}, {"label": "d", "text": "two organisms that remain unaffected 5"}], "week": 3, "answer": "a"}, {"n": 5, "question": "The distance maintained by nesting penguins to avoid pecking from neighbours is related to", "options": [{"label": "a", "text": "herbivory"}, {"label": "b", "text": "parasitoid pressure"}, {"label": "c", "text": "prey switching"}, {"label": "d", "text": "territorial spacing 6"}], "week": 3, "answer": "d"}, {"n": 6, "question": "A parasite that lives inside the body of its host is called", "options": [{"label": "a", "text": "ectoparasite"}, {"label": "b", "text": "endoparasite"}, {"label": "c", "text": "predator"}, {"label": "d", "text": "commensal 7"}], "week": 3, "answer": "b"}, {"n": 7, "question": "Birds on giraffe are an example of", "options": [{"label": "a", "text": "colony"}, {"label": "b", "text": "commensalism"}, {"label": "c", "text": "protocooperation"}, {"label": "d", "text": "allelopathy 8"}], "week": 3, "answer": "b"}, {"n": 8, "question": "Competition in which organisms directly consume a limited resource so that less remains for others is called", "options": [{"label": "a", "text": "interference competition"}, {"label": "b", "text": "exploitative competition"}, {"label": "c", "text": "apparent competition"}, {"label": "d", "text": "neutral competition 9"}], "week": 3, "answer": "b"}, {"n": 9, "question": "Interference competition is also known as", "options": [{"label": "a", "text": "apparent competition"}, {"label": "b", "text": "contest competition"}, {"label": "c", "text": "niche competition"}, {"label": "d", "text": "exploitative competition 10"}], "week": 3, "answer": "b"}, {"n": 10, "question": "The scientific study of animal behaviour is called", "options": [{"label": "a", "text": "behaviourism"}, {"label": "b", "text": "ecology"}, {"label": "c", "text": "ethology"}, {"label": "d", "text": "prey-predator dynamics"}], "week": 3, "answer": "c"}], "10": [{"n": 1, "question": "A community already affected by disease, weeds, pollutants, or livestock pressure is best described as which type of community?", "options": [{"label": "a", "text": "Pristine community"}, {"label": "b", "text": "Climax community"}, {"label": "c", "text": "Resistant community"}, {"label": "d", "text": "Disturbed community 2"}], "week": 10, "answer": "d"}, {"n": 2, "question": "When an organism absorbs a toxic substance into its tissues faster than it loses it, the process is called:", "options": [{"label": "a", "text": "Biomagnification"}, {"label": "b", "text": "Bioavailability"}, {"label": "c", "text": "Bioaccumulation"}, {"label": "d", "text": "Biodegradation 3"}], "week": 10, "answer": "c"}, {"n": 3, "question": "What percentage of marine plastic debris is stated to sink to the ocean bottom?", "options": [{"label": "a", "text": "15%"}, {"label": "b", "text": "30%"}, {"label": "c", "text": "50%"}, {"label": "d", "text": "70% 4"}], "week": 10, "answer": "d"}, {"n": 4, "question": "Hydrocarbons derived directly from mineral oils are called:", "options": [{"label": "a", "text": "Pyrogenic hydrocarbons"}, {"label": "b", "text": "Biogenic hydrocarbons"}, {"label": "c", "text": "Aromatic hydrocarbons"}, {"label": "d", "text": "Petrogenic hydrocarbons 5"}], "week": 10, "answer": "d"}, {"n": 5, "question": "“Any changes in natural or human systems that inadvertently increase vulnerability to climatic stimuli; an adaptation that does not succeed in reducing vulnerability but increases it instead” is a definition for", "options": [{"label": "a", "text": "adaptation"}, {"label": "b", "text": "mitigation"}, {"label": "c", "text": "maladaptation"}, {"label": "d", "text": "malmitigation 6"}], "week": 10, "answer": "c"}, {"n": 6, "question": "A normal ecological community faces one large and infrequent disturbance and then returns close to its earlier condition. Which outcome is best represented?", "options": [{"label": "a", "text": "Long-term alteration"}, {"label": "b", "text": "Recovery"}, {"label": "c", "text": "Bioaccumulation"}, {"label": "d", "text": "Habitat displacement 7"}], "week": 10, "answer": "b"}, {"n": 7, "question": "Macrodebris in the context of plastic debris has fragments of size", "options": [{"label": "a", "text": "> 20 mm"}, {"label": "b", "text": "5 - 20 mm"}, {"label": "c", "text": "< 5 mm"}, {"label": "d", "text": "< 1 mm 8"}], "week": 10, "answer": "a"}, {"n": 8, "question": "The Deepwater Horizon incident is classified by origin as which kind of oil spill?", "options": [{"label": "a", "text": "Natural"}, {"label": "b", "text": "Accidental"}, {"label": "c", "text": "Intentional"}, {"label": "d", "text": "Biogenic 9"}], "week": 10, "answer": "b"}, {"n": 9, "question": "Harmful effects caused by a single or short-term exposure are called:", "options": [{"label": "a", "text": "Chronic toxicity"}, {"label": "b", "text": "Acute toxicity"}, {"label": "c", "text": "Sub-lethal exposure"}, {"label": "d", "text": "Bioavailability 10"}], "week": 10, "answer": "b"}, {"n": 10, "question": "Mesodebris in the context of plastic debris has fragments of size", "options": [{"label": "a", "text": "> 20 mm"}, {"label": "b", "text": "5 - 20 mm"}, {"label": "c", "text": "< 5 mm"}, {"label": "d", "text": "< 1 mm"}], "week": 10, "answer": "b"}], "1": [{"n": 1, "question": "Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)", "options": [{"label": "a", "text": "statics"}, {"label": "b", "text": "interactions"}, {"label": "c", "text": "dynamics"}, {"label": "d", "text": "habitat"}], "week": 1, "answer": "b"}, {"n": 2, "question": "Carolus Linnaeus is considered the father of:", "options": [{"label": "a", "text": "Biogeography"}, {"label": "b", "text": "Modern taxonomy"}, {"label": "c", "text": "Population ecology"}, {"label": "d", "text": "Botanical geography"}], "week": 1, "answer": "b"}, {"n": 3, "question": "\"Enquiry into plants\" is a book written by", "options": [{"label": "a", "text": "Theophrastus"}, {"label": "b", "text": "Linnaeus"}, {"label": "c", "text": "Malthus"}, {"label": "d", "text": "Humboldt"}], "week": 1, "answer": "a"}, {"n": 4, "question": "Who amongst these is considered the father of Biogeography?", "options": [{"label": "a", "text": "Theophrastus"}, {"label": "b", "text": "Linnaeus"}, {"label": "c", "text": "Malthus"}, {"label": "d", "text": "Humboldt"}], "week": 1, "answer": "d"}, {"n": 5, "question": "Genetic adaptation refers to:", "options": [{"label": "a", "text": "High reproductive rate in one generation"}, {"label": "b", "text": "Inheritable fitness"}, {"label": "c", "text": "Physical strength of an individual"}, {"label": "d", "text": "Short-term environmental comfort"}], "week": 1, "answer": "b"}, {"n": 6, "question": "Thomas Robert Malthus influenced studies in:", "options": [{"label": "a", "text": "Community ecology"}, {"label": "b", "text": "Marine ecology"}, {"label": "c", "text": "Population ecology"}, {"label": "d", "text": "Behavioural ecology"}], "week": 1, "answer": "c"}, {"n": 7, "question": "Which approach tests ecological ideas through experiments?", "options": [{"label": "a", "text": "Theoretical approach"}, {"label": "b", "text": "Field approach"}, {"label": "c", "text": "Laboratory approach"}, {"label": "d", "text": "Descriptive approach"}], "week": 1, "answer": "c"}, {"n": 8, "question": "Which approach mainly depends on direct observation of organisms in natural surroundings?", "options": [{"label": "a", "text": "Laboratory approach"}, {"label": "b", "text": "Historical approach"}, {"label": "c", "text": "Theoretical approach"}, {"label": "d", "text": "Field approach"}], "week": 1, "answer": "d"}, {"n": 9, "question": "In the Greek word root of Ecology, logos refers to", "options": [{"label": "a", "text": "household"}, {"label": "b", "text": "preservation"}, {"label": "c", "text": "environment"}, {"label": "d", "text": "study"}], "week": 1, "answer": "d"}, {"n": 10, "question": "Charles Darwin is associated with:", "options": [{"label": "a", "text": "The theory of ecosystem formation"}, {"label": "b", "text": "The theory of taxonomy"}, {"label": "c", "text": "The theory of botanical geography"}, {"label": "d", "text": "The theory of evolution and natural selection"}], "week": 1, "answer": "d"}], "0": [{"n": 1, "question": "The rate of any biological process is limited by that factor in least amount relative to requirement, so there is a single limiting factor. This is the statement for", "options": [{"label": "a", "text": "Liebig's law of the minimum"}, {"label": "b", "text": "Liebig's law of the maximum"}, {"label": "c", "text": "Shelford's law of tolerance"}, {"label": "d", "text": "Shelford's law of intolerance"}], "week": 0, "answer": "a"}, {"n": 2, "question": "Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)", "options": [{"label": "a", "text": "statics"}, {"label": "b", "text": "interactions"}, {"label": "c", "text": "dynamics"}, {"label": "d", "text": "habitat"}], "week": 0, "answer": "b"}, {"n": 3, "question": "Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?", "options": [{"label": "a", "text": "Organ"}, {"label": "b", "text": "Tissue"}, {"label": "c", "text": "Organ system"}, {"label": "d", "text": "Population"}], "week": 0, "answer": "b"}, {"n": 4, "question": "An ecological interaction in which both participating organisms are harmed is called", "options": [{"label": "a", "text": "mutualism"}, {"label": "b", "text": "commensalism"}, {"label": "c", "text": "competition"}, {"label": "d", "text": "neutralism"}], "week": 0, "answer": "c"}, {"n": 5, "question": "In a grazing food chain, the first trophic level after producers is generally occupied by:", "options": [{"label": "a", "text": "Carnivores"}, {"label": "b", "text": "Decomposers"}, {"label": "c", "text": "Detritivores"}, {"label": "d", "text": "Herbivores"}], "week": 0, "answer": "d"}, {"n": 6, "question": "The minimum replacement level fertility for a population to grow should be greater than", "options": [{"label": "a", "text": "1"}, {"label": "b", "text": "2"}, {"label": "c", "text": "3"}, {"label": "d", "text": "4"}], "week": 0, "answer": "b"}, {"n": 7, "question": "Secondary succession refers to succession that occurs", "options": [{"label": "a", "text": "On newly exposed rock or sand surfaces"}, {"label": "b", "text": "In a saline body such as a marsh"}, {"label": "c", "text": "After severe disturbance or removal of a pre-existing community"}, {"label": "d", "text": "Only when climate controls the final community"}], "week": 0, "answer": "c"}, {"n": 8, "question": "Estuaries are specialized habitats because they contain", "options": [{"label": "a", "text": "only freshwater throughout the year"}, {"label": "b", "text": "only saline water throughout the year"}, {"label": "c", "text": "only dry land and thorny shrubs"}, {"label": "d", "text": "a meeting zone of freshwater and saline water"}], "week": 0, "answer": "d"}, {"n": 9, "question": "Which of these is a deterministic factor?", "options": [{"label": "a", "text": "environmental variation"}, {"label": "b", "text": "forest fire"}, {"label": "c", "text": "death rate"}, {"label": "d", "text": "diseases"}], "week": 0, "answer": "c"}, {"n": 10, "question": "In cave formations, the deposits growing downward from the roof are called?", "options": [{"label": "a", "text": "Stalagmites"}, {"label": "b", "text": "Columns"}, {"label": "c", "text": "Stalactites"}, {"label": "d", "text": "Sediment bars"}], "week": 0, "answer": "c"}]};
-const weekGrid=document.getElementById('weekGrid');
-const selectedCount=document.getElementById('selectedCount');
-const startBtn=document.getElementById('startBtn');
-let session=[],idx=0,score=0,answers=[],selectedWeeks=[];
-const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
-for(let w=0;w<=12;w++){
- const label=w===0?'Week 0 · Intro':`Week ${w}`;
- const el=document.createElement('label');el.className='week';
- el.innerHTML=`<input type="checkbox" value="${w}"><span><strong>${label}</strong><small>10 questions</small></span>`;
- weekGrid.appendChild(el);
-}
-function updateSelection(){selectedWeeks=[...weekGrid.querySelectorAll('input:checked')].map(x=>Number(x.value));selectedCount.textContent=`${selectedWeeks.length} week${selectedWeeks.length===1?'':'s'} selected`;startBtn.disabled=!selectedWeeks.length}
-weekGrid.addEventListener('change',updateSelection);
-document.getElementById('selectAll').onclick=()=>{weekGrid.querySelectorAll('input').forEach(x=>x.checked=true);updateSelection()};
-document.getElementById('clearAll').onclick=()=>{weekGrid.querySelectorAll('input').forEach(x=>x.checked=false);updateSelection()};
-startBtn.onclick=()=>{
- session=shuffle(selectedWeeks.flatMap(w=>BANK[w].map(q=>({...q,options:shuffle(q.options.map(o=>({...o})))}))));
- idx=0;score=0;answers=[];document.getElementById('setup').classList.add('hidden');document.getElementById('results').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');renderQuestion();window.scrollTo({top:0,behavior:'smooth'});
-};
-function renderQuestion(){
- const list=document.getElementById('questionList');list.innerHTML='';
- session.forEach((q,questionIndex)=>{
-  const card=document.createElement('article');card.className='question-card';card.dataset.index=questionIndex;
-  card.innerHTML=`<div class="q-meta"><span class="tag">Week ${q.week}</span><span class="tag">Question ${questionIndex+1} of ${session.length}</span></div><h2 class="q-title"></h2><div class="options"></div><div class="feedback-slot" aria-live="polite"></div>`;
-  card.querySelector('.q-title').textContent=q.question;
-  const area=card.querySelector('.options');
-  q.options.forEach((o,i)=>{const b=document.createElement('button');b.className='option';b.type='button';b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span class="option-text"></span>`;b.querySelector('.option-text').textContent=o.text;b.onclick=()=>chooseAnswer(questionIndex,o,b,area,q,card);area.appendChild(b)});
-  list.appendChild(card);
- });
- updateProgress();
-}
-function chooseAnswer(questionIndex,chosen,button,area,q,card){
- if(answers[questionIndex])return;
- const correct=q.options.find(o=>o.label===q.answer);
- const isCorrect=chosen.label===q.answer;
- answers[questionIndex]={week:q.week,question:q.question,chosen:chosen.text,correct:correct?.text||'',isCorrect};
- if(isCorrect)score++;
- [...area.children].forEach((b,i)=>{b.disabled=true;const opt=q.options[i];if(opt.label===q.answer)b.classList.add('correct');if(opt.label===chosen.label&&!isCorrect)b.classList.add('wrong')});
- const f=card.querySelector('.feedback-slot');f.textContent='';f.className='feedback-slot';
- updateProgress();
-}
-function updateProgress(){
- const done=answers.filter(Boolean).length,total=session.length;
- document.getElementById('progressLabel').textContent=`${done} of ${total} answered`;
- document.getElementById('progressBar').style.width=`${done/total*100}%`;
- document.getElementById('finishBtn').disabled=done!==total;
- document.getElementById('completionNote').textContent=done===total?'All questions answered — your scoreboard is ready.':`Answer ${total-done} more question${total-done===1?'':'s'} to view your scoreboard.`;
-}
-document.getElementById('finishBtn').onclick=()=>{if(answers.filter(Boolean).length===session.length)showResults()};
-function showResults(){
- document.getElementById('quiz').classList.add('hidden');const r=document.getElementById('results');r.classList.remove('hidden');
- const total=session.length,wrong=total-score,pct=Math.round(score/total*100);
- const byWeek={};selectedWeeks.forEach(w=>{const subset=answers.filter(a=>a.week===w);byWeek[w]=`${subset.filter(a=>a.isCorrect).length}/${subset.length}`});
- let review=answers.map((a,i)=>`<div class="review-item"><h4>${i+1}. ${escapeHtml(a.question)}</h4><p class="${a.isCorrect?'right':'miss'}">${a.isCorrect?'✓ Correct':'✕ Incorrect'} · Your answer: ${escapeHtml(a.chosen)}</p>${!a.isCorrect?`<p class="right">Correct answer: ${escapeHtml(a.correct)}</p>`:''}<p>Week ${a.week}</p></div>`).join('');
- r.innerHTML=`<div class="score-card"><div class="score-icon">${pct>=80?'🏆':pct>=50?'🌱':'📚'}</div><h2>Practice complete!</h2><p class="score-sub">Here’s how you performed across your selected weeks.</p><div class="score-number">${score}<span style="font-size:25px;color:#7b8b98"> / ${total}</span></div><div style="font-weight:750">${pct}% accuracy</div><div class="stats"><div class="stat"><strong>${score}</strong><span>Correct</span></div><div class="stat"><strong>${wrong}</strong><span>Incorrect</span></div><div class="stat"><strong>${total}</strong><span>Attempted</span></div></div><div class="week-results">${Object.entries(byWeek).map(([w,s])=>`<span class="week-result">Week ${w}: ${s}</span>`).join('')}</div><div class="actions" style="justify-content:center"><button class="btn primary" id="retryBtn">Practice again ↻</button><button class="btn secondary" id="homeBtn">Choose weeks</button><button class="btn secondary" id="reviewToggle">Review answers</button></div><div id="reviewArea" class="review hidden"><h3>Answer review</h3>${review}</div></div>`;
- document.getElementById('progressBar').style.width='100%';window.scrollTo({top:0,behavior:'smooth'});
- document.getElementById('retryBtn').onclick=()=>startBtn.click();
- document.getElementById('homeBtn').onclick=()=>{r.classList.add('hidden');document.getElementById('setup').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
- document.getElementById('reviewToggle').onclick=e=>{const area=document.getElementById('reviewArea');area.classList.toggle('hidden');e.target.textContent=area.classList.contains('hidden')?'Review answers':'Hide review'};
-}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-</script></body></html>
+    <header class="hero">
+        <div class="wrap">
+            <div class="brand">
+                <div class="logo">🌿</div><span>WILDLIFE ECOLOGY <span style="font-weight:400;color:#b8d3c8">/ PRACTICE
+                        LAB</span></span>
+            </div>
+            <h1>Practice. Learn.<br>Protect biodiversity.</h1>
+            <p>A focused practice space for your NPTEL Wildlife Ecology assignments. Choose your weeks, test yourself
+                with shuffled questions, and see your score when you finish.</p>
+            <div class="pill">13 WEEKS · 130 QUESTIONS · INSTANT FEEDBACK</div>
+        </div>
+    </header>
+    <main>
+        <section class="panel" id="setup">
+            <div class="section-head">
+                <div>
+                    <h2>Build your practice session</h2>
+                    <p class="sub">Choose one week or combine as many weeks as you like.</p>
+                </div>
+                <div class="sub" id="selectedCount">0 weeks selected</div>
+            </div>
+            <div class="actions" style="margin-top:15px"><button class="btn secondary" id="selectAll">Select all
+                    weeks</button><button class="btn secondary" id="clearAll">Clear selection</button></div>
+            <div class="week-grid" id="weekGrid"></div>
+            <div class="actions"><button class="btn primary" id="startBtn" disabled>Start practice →</button></div>
+            <div class="hint">Questions and answer choices are shuffled every time you start. Once you choose an answer,
+                that question is locked; the selected answer is marked red or the correct answer green.</div>
+        </section>
+        <section id="quiz" class="hidden">
+            <div class="quiz-top"><span class="progress-label" id="progressLabel">0 of 0 answered</span>
+                <div class="progress"><span id="progressBar"></span></div>
+            </div>
+            <div id="questionList"></div>
+            <div class="quiz-footer" style="background:var(--bg);padding:14px 0"><span class="keyboard-note"
+                    id="completionNote">Answer every question to view your scoreboard.</span><button class="btn primary"
+                    id="finishBtn" disabled>View scoreboard →</button></div>
+        </section>
+        <section id="results" class="hidden"></section>
+    </main>
+    <footer>Wildlife Ecology Practice Lab · Questions based on the uploaded Week 0–12 assignment PDFs.<br><span
+            style="display:inline-block;margin-top:8px;font-weight:750;color:var(--green)">Designed and Developed by
+            Ankit Anand @2026</span></footer>
+    <script>
+        const BANK = {"7":[{"n":1,"question":"In an estuary, species may use areas of","options":[{"label":"a","text":"high, intermediate, and low salinity"},{"label":"b","text":"only high temperature and high fertility"},{"label":"c","text":"only alpine wind and poor soil"},{"label":"d","text":"only forest canopy and grassland patches"}],"week":7,"answer":"a"},{"n":2,"question":"The movement of individuals away from their place of birth or hatching or seed production into a new habitat or area to survive and reproduce is called","options":[{"label":"a","text":"translocation"},{"label":"b","text":"migration"},{"label":"c","text":"dispersal"},{"label":"d","text":"drifting"}],"week":7,"answer":"c"},{"n":3,"question":"Transplantation experiments are used to find","options":[{"label":"a","text":"potential range"},{"label":"b","text":"effective range"},{"label":"c","text":"actual range"},{"label":"d","text":"economic range"}],"week":7,"answer":"a"},{"n":4,"question":"Pneumatophores are roots that","options":[{"label":"a","text":"move downward to store excess salts"},{"label":"b","text":"spread into sand dunes to stop wind erosion"},{"label":"c","text":"grow upward from the ground to obtain air"},{"label":"d","text":"become thorns to reduce transpiration"}],"week":7,"answer":"c"},{"n":5,"question":"At night, cooler and denser air from upper hill areas flows down towards the valley. This wind pattern is called","options":[{"label":"a","text":"valley breeze"},{"label":"b","text":"hill wind"},{"label":"c","text":"ocean breeze"},{"label":"d","text":"estuary current"}],"week":7,"answer":"b"},{"n":6,"question":"Flamingos in the Rann of Kutch are associated with water bodies because they need","options":[{"label":"a","text":"high wind speeds and snow-covered slopes"},{"label":"b","text":"food organisms in water and safe breeding conditions"},{"label":"c","text":"dry deciduous leaves for summer feeding"},{"label":"d","text":"tall coniferous trees for nesting"}],"week":7,"answer":"b"},{"n":7,"question":"Estuaries are specialized habitats because they contain","options":[{"label":"a","text":"only freshwater throughout the year"},{"label":"b","text":"only saline water throughout the year"},{"label":"c","text":"only dry land and thorny shrubs"},{"label":"d","text":"a meeting zone of freshwater and saline water"}],"week":7,"answer":"d"},{"n":8,"question":"The movement of lions across the Gir landscape is an example of","options":[{"label":"a","text":"diffusion"},{"label":"b","text":"secular dispersal"},{"label":"c","text":"jump dispersal"},{"label":"d","text":"drifting"}],"week":7,"answer":"c"},{"n":9,"question":"Mangroves are adapted to areas that experience","options":[{"label":"a","text":"low salinity and permanent dryness"},{"label":"b","text":"snow accumulation and alpine winds"},{"label":"c","text":"deep desert sand with no water movement"},{"label":"d","text":"high salinity and partial or complete inundation"}],"week":7,"answer":"d"},{"n":10,"question":"Scarcity of food is a","options":[{"label":"a","text":"chemical factor"},{"label":"b","text":"demographic factor"},{"label":"c","text":"push factor"},{"label":"d","text":"pull factor"}],"week":7,"answer":"c"}],"12":[{"n":1,"question":"In cave formations, the deposits growing downward from the roof are called?","options":[{"label":"a","text":"Stalagmites"},{"label":"b","text":"Columns"},{"label":"c","text":"Stalactites"},{"label":"d","text":"Sediment bars"}],"week":12,"answer":"c"},{"n":2,"question":"Which of these is a deterministic factor?","options":[{"label":"a","text":"environmental variation"},{"label":"b","text":"forest fire"},{"label":"c","text":"death rate"},{"label":"d","text":"diseases"}],"week":12,"answer":"c"},{"n":3,"question":"An ecological interaction in which both participating organisms are harmed is called","options":[{"label":"a","text":"mutualism"},{"label":"b","text":"commensalism"},{"label":"c","text":"competition"},{"label":"d","text":"neutralism"}],"week":12,"answer":"c"},{"n":4,"question":"Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)","options":[{"label":"a","text":"statics"},{"label":"b","text":"interactions"},{"label":"c","text":"dynamics"},{"label":"d","text":"habitat"}],"week":12,"answer":"b"},{"n":5,"question":"Mesodebris in the context of plastic debris has fragments of size","options":[{"label":"a","text":"> 20 mm"},{"label":"b","text":"5 - 20 mm"},{"label":"c","text":"< 5 mm"},{"label":"d","text":"< 1 mm"}],"week":12,"answer":"b"},{"n":6,"question":"Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?","options":[{"label":"a","text":"Organ"},{"label":"b","text":"Tissue"},{"label":"c","text":"Organ system"},{"label":"d","text":"Population"}],"week":12,"answer":"b"},{"n":7,"question":"Secondary succession refers to succession that occurs","options":[{"label":"a","text":"On newly exposed rock or sand surfaces"},{"label":"b","text":"In a saline body such as a marsh"},{"label":"c","text":"After severe disturbance or removal of a pre-existing community"},{"label":"d","text":"Only when climate controls the final community"}],"week":12,"answer":"c"},{"n":8,"question":"A group of organs working together to perform one or more functions is called?","options":[{"label":"a","text":"Tissue"},{"label":"b","text":"Organ"},{"label":"c","text":"Organism"},{"label":"d","text":"Organ system"}],"week":12,"answer":"d"},{"n":9,"question":"After a forest fire, an incompletely destroyed forest develops through herbaceous, shrub and woodland stages toward a stable stage. This is best described as?","options":[{"label":"a","text":"Secondary succession"},{"label":"b","text":"Climatic climax"},{"label":"c","text":"Bioaccumulation"},{"label":"d","text":"Species-area effect"}],"week":12,"answer":"a"},{"n":10,"question":"If organisms already present in an area change the soil conditions and thereby drive further community change, the succession is?","options":[{"label":"a","text":"Allogenic succession"},{"label":"b","text":"Autogenic succession"},{"label":"c","text":"Catastrophic succession"},{"label":"d","text":"Seasonal succession"}],"week":12,"answer":"b"}],"4":[{"n":1,"question":"Consider the food chain: Grass → Grasshopper → Frog → Snake → Hawk. In this food chain,","options":[{"label":"a","text":"hawk is producer"},{"label":"b","text":"hawk is consumer and carnivore"},{"label":"c","text":"hawk is consumer and herbivore"},{"label":"d","text":"hawk is decomposer"}],"week":4,"answer":"b"},{"n":2,"question":"Trees → Birds → Parasites → Hyperparasites represents","options":[{"label":"a","text":"upright pyramid of numbers"},{"label":"b","text":"inverted pyramid of numbers"},{"label":"c","text":"spindle pyramid of numbers"},{"label":"d","text":"dumb-bell pyramid of numbers"}],"week":4,"answer":"b"},{"n":3,"question":"Glacial lakes are typical examples of","options":[{"label":"a","text":"eutrophic lakes"},{"label":"b","text":"hypereutrophic lakes"},{"label":"c","text":"oligotrophic lakes"},{"label":"d","text":"mesotrophic lakes"}],"week":4,"answer":"c"},{"n":4,"question":"In a grazing food chain, the first trophic level after producers is generally occupied by:","options":[{"label":"a","text":"Carnivores"},{"label":"b","text":"Decomposers"},{"label":"c","text":"Detritivores"},{"label":"d","text":"Herbivores"}],"week":4,"answer":"d"},{"n":5,"question":"Which statement correctly defines net primary production?","options":[{"label":"a","text":"Energy intercepted by producers from the Sun"},{"label":"b","text":"Total energy lost during transfer between trophic levels"},{"label":"c","text":"Gross primary production minus energy lost through respiration per unit time"},{"label":"d","text":"Energy stored only in herbivore biomass"}],"week":4,"answer":"c"},{"n":6,"question":"Which statement correctly defines gross primary production?","options":[{"label":"a","text":"Energy fixed through photosynthesis per unit time"},{"label":"b","text":"Energy lost by organisms through respiration per unit time"},{"label":"c","text":"Total number of producers in an ecosystem"},{"label":"d","text":"Organic matter consumed by herbivores per unit time"}],"week":4,"answer":"a"},{"n":7,"question":"Which chain best represents a detritus food chain?","options":[{"label":"a","text":"Fallen leaves → detritivores → small fish → large fish"},{"label":"b","text":"Grass → chital → tiger"},{"label":"c","text":"Rat → flea → parasitic protozoa"},{"label":"d","text":"Phytoplankton → zooplankton → fish → sea lion"}],"week":4,"answer":"a"},{"n":8,"question":"Consider the food chain: Grass → Grasshopper → Frog → Snake → Hawk. As we move up the food chain,","options":[{"label":"a","text":"available energy decreases"},{"label":"b","text":"available energy increases"},{"label":"c","text":"available energy remains same"},{"label":"d","text":"available energy is zero everywhere"}],"week":4,"answer":"a"},{"n":9,"question":"Which statement correctly describes a decomposer?","options":[{"label":"a","text":"It only feeds on living plants"},{"label":"b","text":"It consumes only primary consumers"},{"label":"c","text":"It converts dead material into soil and recycles nutrients"},{"label":"d","text":"It always occupies the quaternary trophic level"}],"week":4,"answer":"c"},{"n":10,"question":"Which description best defines a heterotroph?","options":[{"label":"a","text":"An organism that converts sunlight directly into inorganic nutrients"},{"label":"b","text":"An organism that cannot produce its own food and depends on organic carbon from other sources"},{"label":"c","text":"An organism that uses chemical reactions to manufacture minerals"},{"label":"d","text":"An organism that occupies only the first trophic level"}],"week":4,"answer":"b"}],"2":[{"n":1,"question":"Hierarchy emerges almost inevitably through a wide variety of evolutionary processes, for the simple reason that hierarchical structures are ____________ (Fill in the blank)","options":[{"label":"a","text":"perfect"},{"label":"b","text":"imperfect"},{"label":"c","text":"stable"},{"label":"d","text":"unstable"}],"week":2,"answer":"c"},{"n":2,"question":"Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?","options":[{"label":"a","text":"Organ"},{"label":"b","text":"Tissue"},{"label":"c","text":"Organ system"},{"label":"d","text":"Population"}],"week":2,"answer":"b"},{"n":3,"question":"\"the diversity that exists within an ecosystem\" is","options":[{"label":"a","text":"alpha (α) biodiversity"},{"label":"b","text":"beta (β) biodiversity"},{"label":"c","text":"gamma (γ) biodiversity"},{"label":"d","text":"delta (δ) biodiversity"}],"week":2,"answer":"a"},{"n":4,"question":"\"groups of actually or potentially interbreeding natural populations, which are reproductively isolated from other such groups\" is a definition of","options":[{"label":"a","text":"cells"},{"label":"b","text":"species"},{"label":"c","text":"ecosystems"},{"label":"d","text":"biomes"}],"week":2,"answer":"b"},{"n":5,"question":"The emergent principle can be stated as","options":[{"label":"a","text":"Whole = sum of parts"},{"label":"b","text":"Whole < sum of parts"},{"label":"c","text":"Whole > sum of parts"},{"label":"d","text":"None of these"}],"week":2,"answer":"c"},{"n":6,"question":"The smallest unit of life is the:","options":[{"label":"a","text":"Cell"},{"label":"b","text":"Tissue"},{"label":"c","text":"Organ"},{"label":"d","text":"Organism"}],"week":2,"answer":"a"},{"n":7,"question":"The diversity of genetic information present at the levels of phyla, families, species, populations and individuals is called:","options":[{"label":"a","text":"Ecosystem biodiversity"},{"label":"b","text":"Species evenness"},{"label":"c","text":"Genetic biodiversity"},{"label":"d","text":"Species richness"}],"week":2,"answer":"c"},{"n":8,"question":"The value of leaving use and non-use values for future generations is called:","options":[{"label":"a","text":"Altruistic value"},{"label":"b","text":"Option value"},{"label":"c","text":"Existence value"},{"label":"d","text":"Bequest value"}],"week":2,"answer":"d"},{"n":9,"question":"Value arising even though a resource is not being used is called:","options":[{"label":"a","text":"Direct value"},{"label":"b","text":"Indirect value"},{"label":"c","text":"Non-use value"},{"label":"d","text":"Productive value"}],"week":2,"answer":"c"},{"n":10,"question":"Species richness refers to:","options":[{"label":"a","text":"The distribution of individuals among different species"},{"label":"b","text":"The genetic variation within one population"},{"label":"c","text":"The number of ecosystems in a biome"},{"label":"d","text":"The number of species present"}],"week":2,"answer":"d"}],"6":[{"n":1,"question":"A guild is a group of species that","options":[{"label":"a","text":"Occupy only one climax community"},{"label":"b","text":"Have identical population size"},{"label":"c","text":"Utilise resources in a similar way"},{"label":"d","text":"Are confined to saline habitats"}],"week":6,"answer":"c"},{"n":2,"question":"The climax near Tindni village is being controlled by disturbance by cattle. This is an example of","options":[{"label":"a","text":"climatic climax"},{"label":"b","text":"edaphic climax"},{"label":"c","text":"disclimax"},{"label":"d","text":"catastrophic climax"}],"week":6,"answer":"c"},{"n":3,"question":"Species abundance may be expressed in terms of","options":[{"label":"a","text":"Climate, soil and slope"},{"label":"b","text":"Number of individuals, biomass or cover"},{"label":"c","text":"Hydrosere, xerosere and halosere"},{"label":"d","text":"Resistance, resilience and stability"}],"week":6,"answer":"b"},{"n":4,"question":"Resistance refers to the ability of a community to","options":[{"label":"a","text":"Recover quickly after disturbance"},{"label":"b","text":"Persist without change in the face of disturbance"},{"label":"c","text":"Increase the number of pioneer species"},{"label":"d","text":"Replace one seral stage with another"}],"week":6,"answer":"b"},{"n":5,"question":"Importance value can be written as","options":[{"label":"a","text":"Relative density + Relative frequency X Relative dominance"},{"label":"b","text":"Relative density X Relative frequency + Relative dominance"},{"label":"c","text":"Relative density + Relative frequency + Relative dominance"},{"label":"d","text":"Relative density X Relative frequency X Relative dominance"}],"week":6,"answer":"c"},{"n":6,"question":"Secondary succession refers to succession that occurs","options":[{"label":"a","text":"On newly exposed rock or sand surfaces"},{"label":"b","text":"In a saline body such as a marsh"},{"label":"c","text":"After severe disturbance or removal of a pre-existing community"},{"label":"d","text":"Only when climate controls the final community"}],"week":6,"answer":"c"},{"n":7,"question":"Lithosere is an example of","options":[{"label":"a","text":"hydrosere"},{"label":"b","text":"xerosere"},{"label":"c","text":"psammosere"},{"label":"d","text":"halosere"}],"week":6,"answer":"b"},{"n":8,"question":"A transition area where two communities meet and integrate is called","options":[{"label":"a","text":"Habitat"},{"label":"b","text":"Niche"},{"label":"c","text":"Ecotone"},{"label":"d","text":"Sere"}],"week":6,"answer":"c"},{"n":9,"question":"Which of these is correct?","options":[{"label":"a","text":"Fundamental niche > Realised niche"},{"label":"b","text":"Fundamental niche = Realised niche"},{"label":"c","text":"Fundamental niche < Realised niche"},{"label":"d","text":"a or b"}],"week":6,"answer":"a"},{"n":10,"question":"Species richness refers to","options":[{"label":"a","text":"Number of species"},{"label":"b","text":"Number of individuals of one species"},{"label":"c","text":"Biomass of the dominant species"},{"label":"d","text":"Basal area of all trees"}],"week":6,"answer":"a"}],"5":[{"n":1,"question":"In population dynamics, which pair represents additions to an existing population?","options":[{"label":"a","text":"Mortality and emigration"},{"label":"b","text":"Natality and immigration"},{"label":"c","text":"Mortality and natality"},{"label":"d","text":"Immigration and emigration"}],"week":5,"answer":"b"},{"n":2,"question":"Cover board surveys are typically used for sampling","options":[{"label":"a","text":"herpetofauna"},{"label":"b","text":"fishes"},{"label":"c","text":"large mammals"},{"label":"d","text":"carnivores"}],"week":5,"answer":"a"},{"n":3,"question":"Pan traps are used for sampling","options":[{"label":"a","text":"bees"},{"label":"b","text":"butterflies"},{"label":"c","text":"non-pollinator insects"},{"label":"d","text":"pollinator insects"}],"week":5,"answer":"d"},{"n":4,"question":"A sampling procedure such that each possible combination of sampling units out of the population has the same chance of being selected is referred to as","options":[{"label":"a","text":"Simple random sampling"},{"label":"b","text":"Systematic sampling"},{"label":"c","text":"Stratified sampling"},{"label":"d","text":"Multistage sampling"}],"week":5,"answer":"a"},{"n":5,"question":"The minimum replacement level fertility for a population to grow should be greater than","options":[{"label":"a","text":"1"},{"label":"b","text":"2"},{"label":"c","text":"3"},{"label":"d","text":"4"}],"week":5,"answer":"b"},{"n":6,"question":"A list of sampling units is called a:","options":[{"label":"a","text":"Sample"},{"label":"b","text":"Sampling intensity"},{"label":"c","text":"Sampling frame"},{"label":"d","text":"Stratum"}],"week":5,"answer":"c"},{"n":7,"question":"In capture-recapture method, the first stage involves:","options":[{"label":"a","text":"Counting faecal pellets"},{"label":"b","text":"Removing trapped animals permanently"},{"label":"c","text":"Estimating bait consumption"},{"label":"d","text":"Capturing, marking and releasing animals"}],"week":5,"answer":"d"},{"n":8,"question":"The logistic growth equation, when plotted, appears","options":[{"label":"a","text":"I shaped"},{"label":"b","text":"J shaped"},{"label":"c","text":"S shaped"},{"label":"d","text":"O shaped"}],"week":5,"answer":"c"},{"n":9,"question":"employs a simple rule of selecting every kth unit starting with a number chosen at random from 1 to k as the random start.","options":[{"label":"a","text":"Simple random sampling"},{"label":"b","text":"Systematic sampling"},{"label":"c","text":"Stratified sampling"},{"label":"d","text":"Multistage sampling"}],"week":5,"answer":"b"},{"n":10,"question":"Which of these is not a measure of absolute population density?","options":[{"label":"a","text":"total count"},{"label":"b","text":"pelt count"},{"label":"c","text":"capture-recapture method"},{"label":"d","text":"removal method"}],"week":5,"answer":"b"}],"9":[{"n":1,"question":"A proposed epoch marked by significant human impact on Earth’s geology and ecosystems is called?","options":[{"label":"a","text":"Holocene"},{"label":"b","text":"Anthropocene"},{"label":"c","text":"Pleistocene"},{"label":"d","text":"Carboniferous"}],"week":9,"answer":"b"},{"n":2,"question":"According to Malthusian model,","options":[{"label":"a","text":"Population grows in geometric progression, food supply increases in arithmetic progression"},{"label":"b","text":"Population grows in geometric progression, food supply increases in geometric progression"},{"label":"c","text":"Population grows in arithmetic progression, food supply increases in arithmetic progression"},{"label":"d","text":"Population grows in arithmetic progression, food supply increases in geometric progression"}],"week":9,"answer":"a"},{"n":3,"question":"Which of these is not a pillar of sustainability?","options":[{"label":"a","text":"environmental sustainability"},{"label":"b","text":"economic sustainability"},{"label":"c","text":"trans-boundary sustainability"},{"label":"d","text":"social sustainability"}],"week":9,"answer":"c"},{"n":4,"question":"The demographic transition sees a society move from","options":[{"label":"a","text":"high birth rate, low death rate to low birth rate, low death rate"},{"label":"b","text":"low birth rate, high death rate to low birth rate, low death rate"},{"label":"c","text":"high birth rate, high death rate to low birth rate, low death rate"},{"label":"d","text":"high birth rate, high death rate to low birth rate, high death rate"}],"week":9,"answer":"c"},{"n":5,"question":"Which of the following is listed as a theme of clean technology?","options":[{"label":"a","text":"Water purification"},{"label":"b","text":"Predator-prey control"},{"label":"c","text":"Migration of birds"},{"label":"d","text":"Food chain length"}],"week":9,"answer":"a"},{"n":6,"question":"When stalactites and stalagmites join together, they form a?","options":[{"label":"a","text":"Lagoon"},{"label":"b","text":"Crevice"},{"label":"c","text":"Terrace"},{"label":"d","text":"Column"}],"week":9,"answer":"d"},{"n":7,"question":"Which of these is a preventive check according to Malthus?","options":[{"label":"a","text":"foresight"},{"label":"b","text":"vice"},{"label":"c","text":"misery"},{"label":"d","text":"flood"}],"week":9,"answer":"a"},{"n":8,"question":"Which of these is a pillar of sustainability","options":[{"label":"a","text":"social sustainability"},{"label":"b","text":"industrial sustainability"},{"label":"c","text":"agricultural sustainability"},{"label":"d","text":"trans-boundary sustainability"}],"week":9,"answer":"a"},{"n":9,"question":"In cave formations, the deposits growing downward from the roof are called?","options":[{"label":"a","text":"Stalagmites"},{"label":"b","text":"Columns"},{"label":"c","text":"Stalactites"},{"label":"d","text":"Sediment bars"}],"week":9,"answer":"c"},{"n":10,"question":"Industrial processes such as the Haber process affect which biogeochemical cycle?","options":[{"label":"a","text":"Carbon cycle only"},{"label":"b","text":"Water cycle only"},{"label":"c","text":"Nitrogen cycle"},{"label":"d","text":"Phosphorus cycle only"}],"week":9,"answer":"c"}],"11":[{"n":1,"question":"Which term refers to the total weight of organisms removed by fishing?","options":[{"label":"a","text":"Natural mortality"},{"label":"b","text":"Recruitment"},{"label":"c","text":"Growth"},{"label":"d","text":"Yield to fishery"}],"week":11,"answer":"d"},{"n":2,"question":"Ludwig's ratchet predicts","options":[{"label":"a","text":"decreasing harvesting rate"},{"label":"b","text":"constant harvesting rate"},{"label":"c","text":"increasing harvesting rate"},{"label":"d","text":"fluctuating harvesting rate"}],"week":11,"answer":"c"},{"n":3,"question":"A deciduous forest in Madhya Pradesh was converted to a mine. After the mining operations were over, the pits were filled up with water and a lake was created. It is now visited by several migratory birds. This is an example of","options":[{"label":"a","text":"recovery"},{"label":"b","text":"restoration"},{"label":"c","text":"enhancement"},{"label":"d","text":"replacement"}],"week":11,"answer":"d"},{"n":4,"question":"Which of these is correct?","options":[{"label":"a","text":"The maximum sustainable yield is near the beginning of the sigmoidal curve."},{"label":"b","text":"The maximum sustainable yield is near the mid-point of the sigmoidal curve."},{"label":"c","text":"The maximum sustainable yield is near the end of the sigmoidal curve."},{"label":"d","text":"None of these."}],"week":11,"answer":"b"},{"n":5,"question":"Which of these is correct?","options":[{"label":"a","text":"R + G = M + F"},{"label":"b","text":"R + M = G + F"},{"label":"c","text":"R + F = M + G"},{"label":"d","text":"R + G + M + F = 0"}],"week":11,"answer":"a"},{"n":6,"question":"In a logistic growth curve, growth is slow near carrying capacity mainly because the population is:","options":[{"label":"a","text":"very small"},{"label":"b","text":"newly introduced"},{"label":"c","text":"close to the environmental limit"},{"label":"d","text":"free from competition"}],"week":11,"answer":"c"},{"n":7,"question":"What does absolute abundance measure?","options":[{"label":"a","text":"Relative catch per unit effort"},{"label":"b","text":"Actual number of individuals present"},{"label":"c","text":"Percentage change in population"},{"label":"d","text":"Estimated trend in sightings"}],"week":11,"answer":"b"},{"n":8,"question":"A root zone treatment plant is an example of","options":[{"label":"a","text":"phytoremediation"},{"label":"b","text":"biological control"},{"label":"c","text":"biomagnification"},{"label":"d","text":"bioaccumulation"}],"week":11,"answer":"a"},{"n":9,"question":"What is a major risk of introducing predators for pest control?","options":[{"label":"a","text":"The pest always becomes extinct immediately"},{"label":"b","text":"The predator cannot reproduce under any condition"},{"label":"c","text":"The predator reduces rainfall"},{"label":"d","text":"The introduced predator may itself become a pest"}],"week":11,"answer":"d"},{"n":10,"question":"Ecotoxicology studies toxic chemicals mainly at which broader levels?","options":[{"label":"a","text":"Individual atoms and molecules only"},{"label":"b","text":"Population, community, ecosystem, and biosphere levels"},{"label":"c","text":"Market demand and harvesting cost only"},{"label":"d","text":"Crop yield and storage levels only"}],"week":11,"answer":"b"}],"8":[{"n":1,"question":"Which of these correctly represents the process of habitat fragmentation and loss?","options":[{"label":"a","text":"Original forest → Dissection → Perforation → Fragmentation → Attrition"},{"label":"b","text":"Original forest → Dissection → Attrition → Fragmentation → Perforation"},{"label":"c","text":"Original forest → Dissection → Perforation → Attrition → Fragmentation"},{"label":"d","text":"Original forest → Dissection → Fragmentation → Perforation → Attrition"}],"week":8,"answer":"a"},{"n":2,"question":"Habitat degradation means","options":[{"label":"a","text":"complete removal of all organisms from an area"},{"label":"b","text":"legal declaration of a protected area"},{"label":"c","text":"breaking a forest into administrative zones"},{"label":"d","text":"reduction in habitat quality for a given species"}],"week":8,"answer":"d"},{"n":3,"question":"When area is reduced by 90% and z is taken as 0.30, species richness approximately becomes","options":[{"label":"a","text":"one-tenth of the original"},{"label":"b","text":"half of the original"},{"label":"c","text":"double the original"},{"label":"d","text":"unchanged"}],"week":8,"answer":"b"},{"n":4,"question":"Breaking a natural landscape into small isolated parcels within human-dominated land is called","options":[{"label":"a","text":"habitat restoration"},{"label":"b","text":"habitat fragmentation"},{"label":"c","text":"ex-situ preservation"},{"label":"d","text":"seed dormancy"}],"week":8,"answer":"b"},{"n":5,"question":"We prefer those areas for the creation of a conservation reserve where the level of threat is","options":[{"label":"a","text":"very high"},{"label":"b","text":"medium"},{"label":"c","text":"very low"},{"label":"d","text":"non-existent"}],"week":8,"answer":"a"},{"n":6,"question":"A very small population moves towards extinction mainly because of Allee effect, chance deaths, and related small-population problems. This is best described as","options":[{"label":"a","text":"habitat displacement"},{"label":"b","text":"small population paradigm"},{"label":"c","text":"reserve design"},{"label":"d","text":"biodiversity repository"}],"week":8,"answer":"b"},{"n":7,"question":"A population becomes smaller because its habitat is shrinking, competitors are increasing, and poaching is removing individuals. This situation is best studied under","options":[{"label":"a","text":"declining population paradigm"},{"label":"b","text":"small population paradigm"},{"label":"c","text":"island biogeography model"},{"label":"d","text":"cryopreservation strategy"}],"week":8,"answer":"a"},{"n":8,"question":"Which of these is a deterministic factor?","options":[{"label":"a","text":"environmental variation"},{"label":"b","text":"forest fire"},{"label":"c","text":"death rate"},{"label":"d","text":"diseases"}],"week":8,"answer":"c"},{"n":9,"question":"Roads, railways, dams, and similar structures contribute to fragmentation because they may act as","options":[{"label":"a","text":"mortality sources and physical barriers"},{"label":"b","text":"seed collection centres"},{"label":"c","text":"botanical repositories"},{"label":"d","text":"cryopreservation facilities"}],"week":8,"answer":"a"},{"n":10,"question":"The acronym HIPPO does not include","options":[{"label":"a","text":"habitat loss"},{"label":"b","text":"invasive species"},{"label":"c","text":"pollination"},{"label":"d","text":"pollution"}],"week":8,"answer":"c"}],"3":[{"n":1,"question":"I observe a bird take a tick out of another bird's head and eat it. In the social context, this behaviour would be called","options":[{"label":"a","text":"tick hunting"},{"label":"b","text":"auto grooming"},{"label":"c","text":"allo grooming"},{"label":"d","text":"foraging"}],"week":3,"answer":"c"},{"n":2,"question":"Leech is an example of","options":[{"label":"a","text":"endoparasite"},{"label":"b","text":"herbivore predator"},{"label":"c","text":"parasitoid"},{"label":"d","text":"ectoparasite"}],"week":3,"answer":"d"},{"n":3,"question":"An ecological interaction in which both participating organisms are harmed is called","options":[{"label":"a","text":"mutualism"},{"label":"b","text":"commensalism"},{"label":"c","text":"competition"},{"label":"d","text":"neutralism"}],"week":3,"answer":"c"},{"n":4,"question":"Interspecific interaction occurs between","options":[{"label":"a","text":"members of different species"},{"label":"b","text":"members of the same species"},{"label":"c","text":"two organisms that are both benefited"},{"label":"d","text":"two organisms that remain unaffected"}],"week":3,"answer":"a"},{"n":5,"question":"The distance maintained by nesting penguins to avoid pecking from neighbours is related to","options":[{"label":"a","text":"herbivory"},{"label":"b","text":"parasitoid pressure"},{"label":"c","text":"prey switching"},{"label":"d","text":"territorial spacing"}],"week":3,"answer":"d"},{"n":6,"question":"A parasite that lives inside the body of its host is called","options":[{"label":"a","text":"ectoparasite"},{"label":"b","text":"endoparasite"},{"label":"c","text":"predator"},{"label":"d","text":"commensal"}],"week":3,"answer":"b"},{"n":7,"question":"Birds on giraffe are an example of","options":[{"label":"a","text":"colony"},{"label":"b","text":"commensalism"},{"label":"c","text":"protocooperation"},{"label":"d","text":"allelopathy"}],"week":3,"answer":"c"},{"n":8,"question":"Competition in which organisms directly consume a limited resource so that less remains for others is called","options":[{"label":"a","text":"interference competition"},{"label":"b","text":"exploitative competition"},{"label":"c","text":"apparent competition"},{"label":"d","text":"neutral competition"}],"week":3,"answer":"b"},{"n":9,"question":"Interference competition is also known as","options":[{"label":"a","text":"apparent competition"},{"label":"b","text":"contest competition"},{"label":"c","text":"niche competition"},{"label":"d","text":"exploitative competition"}],"week":3,"answer":"b"},{"n":10,"question":"The scientific study of animal behaviour is called","options":[{"label":"a","text":"behaviourism"},{"label":"b","text":"ecology"},{"label":"c","text":"ethology"},{"label":"d","text":"prey-predator dynamics"}],"week":3,"answer":"c"}],"10":[{"n":1,"question":"A community already affected by disease, weeds, pollutants, or livestock pressure is best described as which type of community?","options":[{"label":"a","text":"Pristine community"},{"label":"b","text":"Climax community"},{"label":"c","text":"Resistant community"},{"label":"d","text":"Disturbed community"}],"week":10,"answer":"d"},{"n":2,"question":"When an organism absorbs a toxic substance into its tissues faster than it loses it, the process is called:","options":[{"label":"a","text":"Biomagnification"},{"label":"b","text":"Bioavailability"},{"label":"c","text":"Bioaccumulation"},{"label":"d","text":"Biodegradation"}],"week":10,"answer":"c"},{"n":3,"question":"What percentage of marine plastic debris is stated to sink to the ocean bottom?","options":[{"label":"a","text":"15%"},{"label":"b","text":"30%"},{"label":"c","text":"50%"},{"label":"d","text":"70%"}],"week":10,"answer":"d"},{"n":4,"question":"Hydrocarbons derived directly from mineral oils are called:","options":[{"label":"a","text":"Pyrogenic hydrocarbons"},{"label":"b","text":"Biogenic hydrocarbons"},{"label":"c","text":"Aromatic hydrocarbons"},{"label":"d","text":"Petrogenic hydrocarbons"}],"week":10,"answer":"d"},{"n":5,"question":"“Any changes in natural or human systems that inadvertently increase vulnerability to climatic stimuli; an adaptation that does not succeed in reducing vulnerability but increases it instead” is a definition for","options":[{"label":"a","text":"adaptation"},{"label":"b","text":"mitigation"},{"label":"c","text":"maladaptation"},{"label":"d","text":"malmitigation"}],"week":10,"answer":"c"},{"n":6,"question":"A normal ecological community faces one large and infrequent disturbance and then returns close to its earlier condition. Which outcome is best represented?","options":[{"label":"a","text":"Long-term alteration"},{"label":"b","text":"Recovery"},{"label":"c","text":"Bioaccumulation"},{"label":"d","text":"Habitat displacement"}],"week":10,"answer":"b"},{"n":7,"question":"Macrodebris in the context of plastic debris has fragments of size","options":[{"label":"a","text":"> 20 mm"},{"label":"b","text":"5 - 20 mm"},{"label":"c","text":"< 5 mm"},{"label":"d","text":"< 1 mm"}],"week":10,"answer":"a"},{"n":8,"question":"The Deepwater Horizon incident is classified by origin as which kind of oil spill?","options":[{"label":"a","text":"Natural"},{"label":"b","text":"Accidental"},{"label":"c","text":"Intentional"},{"label":"d","text":"Biogenic"}],"week":10,"answer":"b"},{"n":9,"question":"Harmful effects caused by a single or short-term exposure are called:","options":[{"label":"a","text":"Chronic toxicity"},{"label":"b","text":"Acute toxicity"},{"label":"c","text":"Sub-lethal exposure"},{"label":"d","text":"Bioavailability"}],"week":10,"answer":"b"},{"n":10,"question":"Mesodebris in the context of plastic debris has fragments of size","options":[{"label":"a","text":"> 20 mm"},{"label":"b","text":"5 - 20 mm"},{"label":"c","text":"< 5 mm"},{"label":"d","text":"< 1 mm"}],"week":10,"answer":"b"}],"1":[{"n":1,"question":"Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)","options":[{"label":"a","text":"statics"},{"label":"b","text":"interactions"},{"label":"c","text":"dynamics"},{"label":"d","text":"habitat"}],"week":1,"answer":"b"},{"n":2,"question":"Carolus Linnaeus is considered the father of:","options":[{"label":"a","text":"Biogeography"},{"label":"b","text":"Modern taxonomy"},{"label":"c","text":"Population ecology"},{"label":"d","text":"Botanical geography"}],"week":1,"answer":"b"},{"n":3,"question":"\"Enquiry into plants\" is a book written by","options":[{"label":"a","text":"Theophrastus"},{"label":"b","text":"Linnaeus"},{"label":"c","text":"Malthus"},{"label":"d","text":"Humboldt"}],"week":1,"answer":"a"},{"n":4,"question":"Who amongst these is considered the father of Biogeography?","options":[{"label":"a","text":"Theophrastus"},{"label":"b","text":"Linnaeus"},{"label":"c","text":"Malthus"},{"label":"d","text":"Humboldt"}],"week":1,"answer":"d"},{"n":5,"question":"Genetic adaptation refers to:","options":[{"label":"a","text":"High reproductive rate in one generation"},{"label":"b","text":"Inheritable fitness"},{"label":"c","text":"Physical strength of an individual"},{"label":"d","text":"Short-term environmental comfort"}],"week":1,"answer":"b"},{"n":6,"question":"Thomas Robert Malthus influenced studies in:","options":[{"label":"a","text":"Community ecology"},{"label":"b","text":"Marine ecology"},{"label":"c","text":"Population ecology"},{"label":"d","text":"Behavioural ecology"}],"week":1,"answer":"c"},{"n":7,"question":"Which approach tests ecological ideas through experiments?","options":[{"label":"a","text":"Theoretical approach"},{"label":"b","text":"Field approach"},{"label":"c","text":"Laboratory approach"},{"label":"d","text":"Descriptive approach"}],"week":1,"answer":"c"},{"n":8,"question":"Which approach mainly depends on direct observation of organisms in natural surroundings?","options":[{"label":"a","text":"Laboratory approach"},{"label":"b","text":"Historical approach"},{"label":"c","text":"Theoretical approach"},{"label":"d","text":"Field approach"}],"week":1,"answer":"d"},{"n":9,"question":"In the Greek word root of Ecology, logos refers to","options":[{"label":"a","text":"household"},{"label":"b","text":"preservation"},{"label":"c","text":"environment"},{"label":"d","text":"study"}],"week":1,"answer":"d"},{"n":10,"question":"Charles Darwin is associated with:","options":[{"label":"a","text":"The theory of ecosystem formation"},{"label":"b","text":"The theory of taxonomy"},{"label":"c","text":"The theory of botanical geography"},{"label":"d","text":"The theory of evolution and natural selection"}],"week":1,"answer":"d"}],"0":[{"n":1,"question":"The rate of any biological process is limited by that factor in least amount relative to requirement, so there is a single limiting factor. This is the statement for","options":[{"label":"a","text":"Liebig's law of the minimum"},{"label":"b","text":"Liebig's law of the maximum"},{"label":"c","text":"Shelford's law of tolerance"},{"label":"d","text":"Shelford's law of intolerance"}],"week":0,"answer":"a"},{"n":2,"question":"Ecology is the scientific study of that determine the distribution and abundance of organisms. (Fill in the blanks)","options":[{"label":"a","text":"statics"},{"label":"b","text":"interactions"},{"label":"c","text":"dynamics"},{"label":"d","text":"habitat"}],"week":0,"answer":"b"},{"n":3,"question":"Which level is formed when similar cells and their extracellular matrix from the same origin together perform a specific function?","options":[{"label":"a","text":"Organ"},{"label":"b","text":"Tissue"},{"label":"c","text":"Organ system"},{"label":"d","text":"Population"}],"week":0,"answer":"b"},{"n":4,"question":"An ecological interaction in which both participating organisms are harmed is called","options":[{"label":"a","text":"mutualism"},{"label":"b","text":"commensalism"},{"label":"c","text":"competition"},{"label":"d","text":"neutralism"}],"week":0,"answer":"c"},{"n":5,"question":"In a grazing food chain, the first trophic level after producers is generally occupied by:","options":[{"label":"a","text":"Carnivores"},{"label":"b","text":"Decomposers"},{"label":"c","text":"Detritivores"},{"label":"d","text":"Herbivores"}],"week":0,"answer":"d"},{"n":6,"question":"The minimum replacement level fertility for a population to grow should be greater than","options":[{"label":"a","text":"1"},{"label":"b","text":"2"},{"label":"c","text":"3"},{"label":"d","text":"4"}],"week":0,"answer":"b"},{"n":7,"question":"Secondary succession refers to succession that occurs","options":[{"label":"a","text":"On newly exposed rock or sand surfaces"},{"label":"b","text":"In a saline body such as a marsh"},{"label":"c","text":"After severe disturbance or removal of a pre-existing community"},{"label":"d","text":"Only when climate controls the final community"}],"week":0,"answer":"c"},{"n":8,"question":"Estuaries are specialized habitats because they contain","options":[{"label":"a","text":"only freshwater throughout the year"},{"label":"b","text":"only saline water throughout the year"},{"label":"c","text":"only dry land and thorny shrubs"},{"label":"d","text":"a meeting zone of freshwater and saline water"}],"week":0,"answer":"d"},{"n":9,"question":"Which of these is a deterministic factor?","options":[{"label":"a","text":"environmental variation"},{"label":"b","text":"forest fire"},{"label":"c","text":"death rate"},{"label":"d","text":"diseases"}],"week":0,"answer":"c"},{"n":10,"question":"In cave formations, the deposits growing downward from the roof are called?","options":[{"label":"a","text":"Stalagmites"},{"label":"b","text":"Columns"},{"label":"c","text":"Stalactites"},{"label":"d","text":"Sediment bars"}],"week":0,"answer":"c"}]};
+        const weekGrid = document.getElementById('weekGrid');
+        const selectedCount = document.getElementById('selectedCount');
+        const startBtn = document.getElementById('startBtn');
+        let session = [], idx = 0, score = 0, answers = [], selectedWeeks = [];
+        const shuffle = a => { const x = [...a]; for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[x[i], x[j]] = [x[j], x[i]] } return x };
+        for (let w = 0; w <= 12; w++) {
+            const label = w === 0 ? 'Week 0 · Intro' : `Week ${w}`;
+            const el = document.createElement('label'); el.className = 'week';
+            el.innerHTML = `<input type="checkbox" value="${w}"><span><strong>${label}</strong><small>10 questions</small></span>`;
+            weekGrid.appendChild(el);
+        }
+        function updateSelection() { selectedWeeks = [...weekGrid.querySelectorAll('input:checked')].map(x => Number(x.value)); selectedCount.textContent = `${selectedWeeks.length} week${selectedWeeks.length === 1 ? '' : 's'} selected`; startBtn.disabled = !selectedWeeks.length }
+        weekGrid.addEventListener('change', updateSelection);
+        document.getElementById('selectAll').onclick = () => { weekGrid.querySelectorAll('input').forEach(x => x.checked = true); updateSelection() };
+        document.getElementById('clearAll').onclick = () => { weekGrid.querySelectorAll('input').forEach(x => x.checked = false); updateSelection() };
+        startBtn.onclick = () => {
+            session = shuffle(selectedWeeks.flatMap(w => BANK[w].map(q => ({ ...q, options: shuffle(q.options.map(o => ({ ...o }))) }))));
+            idx = 0; score = 0; answers = []; document.getElementById('setup').classList.add('hidden'); document.getElementById('results').classList.add('hidden'); document.getElementById('quiz').classList.remove('hidden'); renderQuestion(); window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        function renderQuestion() {
+            const list = document.getElementById('questionList'); list.innerHTML = '';
+            session.forEach((q, questionIndex) => {
+                const card = document.createElement('article'); card.className = 'question-card'; card.dataset.index = questionIndex;
+                card.innerHTML = `<div class="q-meta"><span class="tag">Week ${q.week}</span><span class="tag">Question ${questionIndex + 1} of ${session.length}</span></div><h2 class="q-title"></h2><div class="options"></div><div class="feedback-slot" aria-live="polite"></div>`;
+                card.querySelector('.q-title').textContent = q.question;
+                const area = card.querySelector('.options');
+                q.options.forEach((o, i) => { const b = document.createElement('button'); b.className = 'option'; b.type = 'button'; b.innerHTML = `<span class="letter">${String.fromCharCode(65 + i)}</span><span class="option-text"></span>`; b.querySelector('.option-text').textContent = o.text; b.onclick = () => chooseAnswer(questionIndex, o, b, area, q, card); area.appendChild(b) });
+                list.appendChild(card);
+            });
+            updateProgress();
+        }
+        function chooseAnswer(questionIndex, chosen, button, area, q, card) {
+            if (answers[questionIndex]) return;
+            const correct = q.options.find(o => o.label === q.answer);
+            const isCorrect = chosen.label === q.answer;
+            answers[questionIndex] = { week: q.week, question: q.question, chosen: chosen.text, correct: correct?.text || '', isCorrect };
+            if (isCorrect) score++;
+            [...area.children].forEach((b, i) => { b.disabled = true; const opt = q.options[i]; if (opt.label === q.answer) b.classList.add('correct'); if (opt.label === chosen.label && !isCorrect) b.classList.add('wrong') });
+            const f = card.querySelector('.feedback-slot'); f.textContent = ''; f.className = 'feedback-slot';
+            updateProgress();
+        }
+        function updateProgress() {
+            const done = answers.filter(Boolean).length, total = session.length;
+            document.getElementById('progressLabel').textContent = `${done} of ${total} answered`;
+            document.getElementById('progressBar').style.width = `${done / total * 100}%`;
+            document.getElementById('finishBtn').disabled = done !== total;
+            document.getElementById('completionNote').textContent = done === total ? 'All questions answered — your scoreboard is ready.' : `Answer ${total - done} more question${total - done === 1 ? '' : 's'} to view your scoreboard.`;
+        }
+        document.getElementById('finishBtn').onclick = () => { if (answers.filter(Boolean).length === session.length) showResults() };
+        function showResults() {
+            document.getElementById('quiz').classList.add('hidden'); const r = document.getElementById('results'); r.classList.remove('hidden');
+            const total = session.length, wrong = total - score, pct = Math.round(score / total * 100);
+            const byWeek = {}; selectedWeeks.forEach(w => { const subset = answers.filter(a => a.week === w); byWeek[w] = `${subset.filter(a => a.isCorrect).length}/${subset.length}` });
+            let review = answers.map((a, i) => `<div class="review-item"><h4>${i + 1}. ${escapeHtml(a.question)}</h4><p class="${a.isCorrect ? 'right' : 'miss'}">${a.isCorrect ? '✓ Correct' : '✕ Incorrect'} · Your answer: ${escapeHtml(a.chosen)}</p>${!a.isCorrect ? `<p class="right">Correct answer: ${escapeHtml(a.correct)}</p>` : ''}<p>Week ${a.week}</p></div>`).join('');
+            r.innerHTML = `<div class="score-card"><div class="score-icon">${pct >= 80 ? '🏆' : pct >= 50 ? '🌱' : '📚'}</div><h2>Practice complete!</h2><p class="score-sub">Here’s how you performed across your selected weeks.</p><div class="score-number">${score}<span style="font-size:25px;color:#7b8b98"> / ${total}</span></div><div style="font-weight:750">${pct}% accuracy</div><div class="stats"><div class="stat"><strong>${score}</strong><span>Correct</span></div><div class="stat"><strong>${wrong}</strong><span>Incorrect</span></div><div class="stat"><strong>${total}</strong><span>Attempted</span></div></div><div class="week-results">${Object.entries(byWeek).map(([w, s]) => `<span class="week-result">Week ${w}: ${s}</span>`).join('')}</div><div class="actions" style="justify-content:center"><button class="btn primary" id="retryBtn">Practice again ↻</button><button class="btn secondary" id="homeBtn">Choose weeks</button><button class="btn secondary" id="reviewToggle">Review answers</button></div><div id="reviewArea" class="review hidden"><h3>Answer review</h3>${review}</div></div>`;
+            document.getElementById('progressBar').style.width = '100%'; window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('retryBtn').onclick = () => startBtn.click();
+            document.getElementById('homeBtn').onclick = () => { r.classList.add('hidden'); document.getElementById('setup').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }) };
+            document.getElementById('reviewToggle').onclick = e => { const area = document.getElementById('reviewArea'); area.classList.toggle('hidden'); e.target.textContent = area.classList.contains('hidden') ? 'Review answers' : 'Hide review' };
+        }
+        function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])) }
+    </script>
+</body>
+
+</html>
